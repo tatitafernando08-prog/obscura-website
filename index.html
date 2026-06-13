@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DataGuard | Stay Safe Online</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #0a0f1c;
+  color: #fff;
+}
+
+/* NAVBAR */
+nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  background: #111827;
+}
+
+nav h1 {
+  color: #4f46e5;
+}
+
+nav ul {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+}
+
+/* SECTIONS */
+section {
+  padding: 40px;
+}
+
+/* CARD STYLE */
+.card {
+  background: #111827;
+  padding: 20px;
+  border-radius: 15px;
+  margin-top: 20px;
+}
+
+/* BUTTON */
+button {
+  background: #4f46e5;
+  border: none;
+  padding: 10px 15px;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background: #6366f1;
+}
+
+/* INPUT */
+input {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* RESULT TEXT */
+.result {
+  margin-top: 10px;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <h1>DataGuard</h1>
+  <ul>
+    <li><a href="#quiz">Safety Check</a></li>
+    <li><a href="#password">Password</a></li>
+    <li><a href="#scam">Scam Game</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section>
+  <h2>Protect Your Digital Life 🔐</h2>
+  <p>Learn how safe you are online and improve your security instantly.</p>
+</section>
+
+<!-- SAFETY QUIZ -->
+<section id="quiz">
+  <h2>🧠 Safety Checker</h2>
+  <div class="card">
+
+    <p>Do you use the same password everywhere?</p>
+    <button onclick="answer(0)">Yes</button>
+    <button onclick="answer(1)">No</button>
+
+    <p>Is your account private?</p>
+    <button onclick="answer(1)">Yes</button>
+    <button onclick="answer(0)">No</button>
+
+    <p>Do you use 2FA?</p>
+    <button onclick="answer(1)">Yes</button>
+    <button onclick="answer(0)">No</button>
+
+    <button onclick="calculateScore()">Check Score</button>
+
+    <div class="result" id="quizResult"></div>
+  </div>
+</section>
+
+<!-- PASSWORD CHECKER -->
+<section id="password">
+  <h2>🔐 Password Strength Checker</h2>
+  <div class="card">
+    <input type="text" id="passwordInput" placeholder="Enter your password">
+    <button onclick="checkPassword()">Check Strength</button>
+
+    <div class="result" id="passwordResult"></div>
+  </div>
+</section>
+
+<!-- SCAM GAME -->
+<section id="scam">
+  <h2>🚨 Scam Detector Game</h2>
+  <div class="card">
+
+    <p id="scamText">
+      "Congratulations! You won $1000! Click this link now!"
+    </p>
+
+    <button onclick="scamAnswer('scam')">Scam</button>
+    <button onclick="scamAnswer('safe')">Safe</button>
+
+    <div class="result" id="scamResult"></div>
+  </div>
+</section>
+
+<script>
+/* QUIZ */
+let score = 0;
+
+function answer(value) {
+  score += value;
+}
+
+function calculateScore() {
+  let result = "";
+
+  if (score <= 1) result = "⚠️ Very Unsafe";
+  else if (score == 2) result = "⚠️ Needs Improvement";
+  else result = "✅ You're Safe!";
+
+  document.getElementById("quizResult").innerText = result;
+
+  score = 0; // reset
+}
+
+/* PASSWORD CHECK */
+function checkPassword() {
+  let password = document.getElementById("passwordInput").value;
+  let strength = "Weak";
+
+  if (password.length > 8 &&
+      /[A-Z]/.test(password) &&
+      /[0-9]/.test(password)) {
+    strength = "Strong 💪";
+  } else if (password.length > 5) {
+    strength = "Medium ⚠️";
+  }
+
+  document.getElementById("passwordResult").innerText = "Strength: " + strength;
+}
+
+/* SCAM GAME */
+function scamAnswer(choice) {
+  let result = "";
+
+  if (choice === "scam") {
+    result = "✅ Correct! This is a scam.";
+  } else {
+    result = "❌ Wrong! This is a scam.";
+  }
+
+  document.getElementById("scamResult").innerText = result;
+}
+</script>
+
+</body>
+</html>
