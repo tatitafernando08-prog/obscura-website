@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Set up your profile — Obscura</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .onboarding-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+      background: linear-gradient(135deg, #FAF8FF 0%, #F0EBFF 100%);
+    }
+    .onboarding-card {
+      width: 100%;
+      max-width: 480px;
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 40px 36px;
+      box-shadow: 0 20px 60px rgba(124,92,191,0.15);
+    }
+    .onboarding-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: #2D1F4E;
+      margin-bottom: 28px;
+    }
+    .onboarding-logo img { width: 36px; height: 36px; }
+    .onboarding-steps {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+    .onboarding-steps span {
+      flex: 1;
+      height: 4px;
+      border-radius: 100px;
+      background: rgba(124,92,191,0.15);
+      transition: background 0.3s;
+    }
+    .onboarding-steps span.done { background: #7C5CBF; }
+    .onboarding-step { display: none; }
+    .onboarding-step.active { display: block; }
+    .onboarding-step h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: #2D1F4E;
+      margin-bottom: 6px;
+    }
+    .onboarding-step p.sub {
+      font-size: 14px;
+      color: rgba(45,31,78,0.6);
+      margin-bottom: 24px;
+    }
+    .option-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .option-card {
+      border: 2px solid rgba(124,92,191,0.15);
+      border-radius: 14px;
+      padding: 18px 16px;
+      text-align: center;
+      cursor: pointer;
+      font-weight: 600;
+      color: #2D1F4E;
+      font-size: 14px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .option-card:hover { border-color: rgba(124,92,191,0.4); }
+    .option-card.selected {
+      border-color: #7C5CBF;
+      background: rgba(124,92,191,0.08);
+      color: #7C5CBF;
+    }
+    .onboarding-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .onboarding-back {
+      background: none;
+      border: none;
+      color: rgba(45,31,78,0.5);
+      font-size: 14px;
+      cursor: pointer;
+      visibility: hidden;
+    }
+    .onboarding-back.visible { visibility: visible; }
+    .onboarding-continue {
+      border: none;
+      cursor: pointer;
+      padding: 12px 32px;
+    }
+    .onboarding-continue:disabled { opacity: 0.5; cursor: not-allowed; }
+    .onboarding-error {
+      display: none;
+      font-size: 13px;
+      color: #D14F4F;
+      background: rgba(224,92,92,0.1);
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-bottom: 16px;
+    }
+    .onboarding-error.visible { display: block; }
+  </style>
+</head>
+<body>
+
+  <div class="onboarding-page">
+    <div class="onboarding-card">
+      <div class="onboarding-logo">
+        <img src="assets/logo.png" alt="Obscura logo">
+        OBSCURA
+      </div>
+
+      <div class="onboarding-steps">
+        <span id="stepDot1"></span>
+        <span id="stepDot2"></span>
+        <span id="stepDot3"></span>
+        <span id="stepDot4"></span>
+      </div>
+
+      <div class="onboarding-error" id="onboardingError"></div>
+
+      <!-- Step 1: Exam type -->
+      <div class="onboarding-step active" data-step="1">
+        <h2>Which exam are you preparing for?</h2>
+        <p class="sub">This helps NESH tailor everything to your syllabus.</p>
+        <div class="option-grid">
+          <div class="option-card" data-field="exam_type" data-value="OL">O/L</div>
+          <div class="option-card" data-field="exam_type" data-value="AL">A/L</div>
+        </div>
+        <div class="onboarding-nav">
+          <button class="onboarding-back" data-back>Back</button>
+          <button class="btn-primary onboarding-continue" data-next disabled>Continue</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Syllabus -->
+      <div class="onboarding-step" data-step="2">
+        <h2>Which syllabus do you follow?</h2>
+        <p class="sub">So NESH pulls answers from the right past papers.</p>
+        <div class="option-grid">
+          <div class="option-card" data-field="syllabus" data-value="local">Local</div>
+          <div class="option-card" data-field="syllabus" data-value="edexcel">Edexcel</div>
+          <div class="option-card" data-field="syllabus" data-value="cambridge">Cambridge</div>
+        </div>
+        <div class="onboarding-nav">
+          <button class="onboarding-back visible" data-back>Back</button>
+          <button class="btn-primary onboarding-continue" data-next disabled>Continue</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Stream (A/L only) -->
+      <div class="onboarding-step" data-step="3">
+        <h2>What's your stream?</h2>
+        <p class="sub">Pick the A/L stream you're studying.</p>
+        <div class="option-grid">
+          <div class="option-card" data-field="stream" data-value="science">Science</div>
+          <div class="option-card" data-field="stream" data-value="commerce">Commerce</div>
+          <div class="option-card" data-field="stream" data-value="arts">Arts</div>
+          <div class="option-card" data-field="stream" data-value="technology">Technology</div>
+        </div>
+        <div class="onboarding-nav">
+          <button class="onboarding-back visible" data-back>Back</button>
+          <button class="btn-primary onboarding-continue" data-next disabled>Continue</button>
+        </div>
+      </div>
+
+      <!-- Step 4: Medium -->
+      <div class="onboarding-step" data-step="4">
+        <h2>What's your preferred medium?</h2>
+        <p class="sub">NESH can explain things in whichever language is easiest for you.</p>
+        <div class="option-grid">
+          <div class="option-card" data-field="medium" data-value="english">English</div>
+          <div class="option-card" data-field="medium" data-value="sinhala">Sinhala</div>
+          <div class="option-card" data-field="medium" data-value="tamil">Tamil</div>
+        </div>
+        <div class="onboarding-nav">
+          <button class="onboarding-back visible" data-back>Back</button>
+          <button class="btn-primary onboarding-continue" id="finishBtn" disabled>Finish</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const SUPABASE_URL = 'https://zsdsqyowcjifbktbolji.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpzZHNxeW93Y2ppZmJrdGJvbGppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzNzI2MzAsImV4cCI6MjA5NTk0ODYzMH0.k6FeqX_s7y4C662Do6ii9MkRSlkWMFzdF2Knvrwg3b8';
+
+    // Must be logged in to be here.
+    const sessionRaw = localStorage.getItem('obscura_session');
+    if (!sessionRaw) {
+      window.location.href = 'index.html';
+    }
+    const session = JSON.parse(sessionRaw || '{}');
+
+    const answers = { exam_type: null, syllabus: null, stream: null, medium: null };
+    let currentStep = 1;
+
+    const steps = document.querySelectorAll('.onboarding-step');
+    const dots = [
+      document.getElementById('stepDot1'),
+      document.getElementById('stepDot2'),
+      document.getElementById('stepDot3'),
+      document.getElementById('stepDot4')
+    ];
+    const errorBox = document.getElementById('onboardingError');
+
+    function getStepOrder() {
+      // O/L students skip the stream step entirely.
+      return answers.exam_type === 'OL' ? [1, 2, 4] : [1, 2, 3, 4];
+    }
+
+    function showStep(stepNum) {
+      steps.forEach(s => s.classList.toggle('active', parseInt(s.dataset.step) === stepNum));
+      const order = getStepOrder();
+      dots.forEach((d, i) => d.classList.toggle('done', i < order.indexOf(stepNum) + 1 || (stepNum === order[order.length - 1] && i === 3)));
+      currentStep = stepNum;
+    }
+
+    document.querySelectorAll('.option-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const field = card.dataset.field;
+        const value = card.dataset.value;
+        document.querySelectorAll(`.option-card[data-field="${field}"]`).forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        answers[field] = value;
+
+        const stepEl = card.closest('.onboarding-step');
+        const nextBtn = stepEl.querySelector('[data-next], #finishBtn');
+        if (nextBtn) nextBtn.disabled = false;
+      });
+    });
+
+    document.querySelectorAll('[data-next]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const order = getStepOrder();
+        const idx = order.indexOf(currentStep);
+        showStep(order[idx + 1]);
+      });
+    });
+
+    document.querySelectorAll('[data-back]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const order = getStepOrder();
+        const idx = order.indexOf(currentStep);
+        if (idx > 0) showStep(order[idx - 1]);
+      });
+    });
+
+    document.getElementById('finishBtn').addEventListener('click', async () => {
+      const finishBtn = document.getElementById('finishBtn');
+      finishBtn.disabled = true;
+      finishBtn.textContent = 'Saving...';
+      errorBox.classList.remove('visible');
+
+      try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/student_profiles`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${session.access_token}`,
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify({
+            id: session.user.id,
+            exam_type: answers.exam_type,
+            syllabus: answers.syllabus,
+            stream: answers.exam_type === 'OL' ? null : answers.stream,
+            medium: answers.medium
+          })
+        });
+
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data.message || 'Something went wrong saving your profile.');
+        }
+
+        window.location.href = 'dashboard.html';
+      } catch (err) {
+        errorBox.textContent = err.message;
+        errorBox.classList.add('visible');
+        finishBtn.disabled = false;
+        finishBtn.textContent = 'Finish';
+      }
+    });
+  </script>
+</body>
+</html>

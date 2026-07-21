@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Chat — Obscura</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .app-shell { display: flex; height: 100vh; background: #F9F7FF; overflow: hidden; }
+    .app-sidebar {
+      width: 240px; flex-shrink: 0; background: #ffffff;
+      border-right: 1px solid rgba(124,92,191,0.1); padding: 24px 16px;
+      display: flex; flex-direction: column;
+    }
+    .app-sidebar .logo { padding: 0 8px; margin-bottom: 32px; font-size: 18px; }
+    .app-sidebar .logo img { width: 36px; height: 36px; }
+    .app-nav-item {
+      display: flex; align-items: center; gap: 12px; padding: 12px 14px;
+      border-radius: 12px; color: rgba(45,31,78,0.6); text-decoration: none;
+      font-size: 14px; font-weight: 500; margin-bottom: 4px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .app-nav-item svg { width: 20px; height: 20px; flex-shrink: 0; }
+    .app-nav-item:hover { background: rgba(124,92,191,0.06); }
+    .app-nav-item.active { background: rgba(124,92,191,0.1); color: #7C5CBF; font-weight: 600; }
+    .app-nav-soon {
+      margin-left: auto; font-size: 10px; font-weight: 700; color: rgba(124,92,191,0.5);
+      background: rgba(124,92,191,0.08); padding: 2px 6px; border-radius: 100px;
+    }
+    .app-sidebar-footer { margin-top: auto; padding-top: 16px; border-top: 1px solid rgba(124,92,191,0.1); }
+
+    .chat-main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+
+    .chat-topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 28px; background: #ffffff; border-bottom: 1px solid rgba(124,92,191,0.1);
+    }
+    .chat-topbar-left { display: flex; align-items: center; gap: 12px; }
+    .chat-topbar-avatar {
+      width: 40px; height: 40px; border-radius: 12px;
+      background: linear-gradient(135deg, #7C5CBF, #A87FE0);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .chat-topbar-avatar svg { width: 22px; height: 22px; color: white; }
+    .chat-topbar-name { font-weight: 700; color: #2D1F4E; font-size: 15px; }
+    .chat-topbar-status { font-size: 12px; color: #5BB88A; }
+
+    .subject-select {
+      padding: 8px 14px; border-radius: 100px; border: 1px solid rgba(124,92,191,0.2);
+      background: #F9F7FF; color: #2D1F4E; font-size: 13px; font-weight: 600;
+      font-family: 'Inter', sans-serif; cursor: pointer; outline: none;
+    }
+
+    .chat-messages {
+      flex: 1; overflow-y: auto; padding: 28px; display: flex;
+      flex-direction: column; gap: 16px;
+    }
+    .chat-bubble-row { display: flex; }
+    .chat-bubble-row.user { justify-content: flex-end; }
+    .chat-bubble {
+      max-width: 65%; padding: 14px 18px; border-radius: 16px;
+      font-size: 14px; line-height: 1.6; white-space: pre-wrap;
+    }
+    .chat-bubble.user { background: #7C5CBF; color: white; border-bottom-right-radius: 4px; }
+    .chat-bubble.nesh {
+      background: #ffffff; color: #2D1F4E; border-bottom-left-radius: 4px;
+      box-shadow: 0 2px 10px rgba(124,92,191,0.08);
+    }
+    .chat-bubble.nesh.loading { color: rgba(45,31,78,0.4); font-style: italic; }
+    .chat-bubble.nesh.error { color: #D14F4F; background: rgba(224,92,92,0.06); }
+
+    .chat-empty-state {
+      flex: 1; display: flex; flex-direction: column; align-items: center;
+      justify-content: center; text-align: center; color: rgba(45,31,78,0.5);
+      padding: 40px;
+    }
+    .chat-empty-state img { width: 96px; margin-bottom: 16px; }
+    .chat-empty-state h3 { color: #2D1F4E; font-family: 'Space Grotesk', sans-serif; margin-bottom: 6px; }
+
+    .chat-input-row {
+      display: flex; align-items: center; gap: 10px; padding: 18px 28px;
+      background: #ffffff; border-top: 1px solid rgba(124,92,191,0.1);
+    }
+    .chat-input-row input {
+      flex: 1; padding: 13px 18px; border-radius: 100px;
+      border: 1px solid rgba(124,92,191,0.15); background: #F9F7FF;
+      font-family: 'Inter', sans-serif; font-size: 14px; color: #2D1F4E; outline: none;
+    }
+    .chat-input-row input:focus { border-color: #7C5CBF; }
+    .chat-send-btn {
+      width: 44px; height: 44px; border-radius: 50%; border: none;
+      background: #7C5CBF; color: white; display: flex; align-items: center;
+      justify-content: center; cursor: pointer; flex-shrink: 0; transition: background 0.2s;
+    }
+    .chat-send-btn:hover { background: #6B4DA8; }
+    .chat-send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .chat-send-btn svg { width: 18px; height: 18px; }
+
+    @media (max-width: 900px) {
+      .app-sidebar { display: none; }
+      .chat-bubble { max-width: 82%; }
+      .chat-topbar, .chat-input-row { padding: 14px 16px; }
+      .chat-messages { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-shell">
+    <aside class="app-sidebar">
+      <a href="dashboard.html" class="logo">
+        <img src="assets/logo.png" alt="Obscura logo">
+      </a>
+      <a href="dashboard.html" class="app-nav-item">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 11.5 12 4l8 7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 10v9a1 1 0 0 0 1 1h4v-6h2v6h4a1 1 0 0 0 1-1v-9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Home
+      </a>
+      <a href="focus-room.html" class="app-nav-item">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v4l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Focus Room
+      </a>
+      <a href="chat.html" class="app-nav-item active">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 5.5C4 4.67 4.67 4 5.5 4h13c.83 0 1.5.67 1.5 1.5v9c0 .83-.67 1.5-1.5 1.5H9l-4 4v-4H5.5C4.67 16 4 15.33 4 14.5v-9Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        AI Chat
+      </a>
+      <a href="planner.html" class="app-nav-item">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="5" width="16" height="15" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M4 9.5h16" stroke="currentColor" stroke-width="1.8"/><path d="M8 3v3.2M16 3v3.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Planner
+      </a>
+      <a href="#" class="app-nav-item">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 19V10M12 19V5M19 19v-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Progress
+        <span class="app-nav-soon">Soon</span>
+      </a>
+      <a href="#" class="app-nav-item">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.8"/><path d="M5 20c1.5-4 5-5.5 7-5.5S17.5 16 19 20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Profile
+        <span class="app-nav-soon">Soon</span>
+      </a>
+      <div class="app-sidebar-footer">
+        <a href="#" class="app-nav-item" id="logoutBtn">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h3M15 16l4-4-4-4M19 12H9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Log Out
+        </a>
+      </div>
+    </aside>
+
+    <div class="chat-main">
+      <div class="chat-topbar">
+        <div class="chat-topbar-left">
+          <div class="chat-topbar-avatar">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 5.5C4 4.67 4.67 4 5.5 4h13c.83 0 1.5.67 1.5 1.5v9c0 .83-.67 1.5-1.5 1.5H9l-4 4v-4H5.5C4.67 16 4 15.33 4 14.5v-9Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <div class="chat-topbar-name">NESH AI</div>
+            <div class="chat-topbar-status">● Online</div>
+          </div>
+        </div>
+        <select class="subject-select" id="subjectSelect"></select>
+      </div>
+
+      <div class="chat-messages" id="chatMessages">
+        <div class="chat-empty-state" id="chatEmptyState">
+          <img src="assets/mascot_wave.png" alt="NESH">
+          <h3>Ask NESH anything</h3>
+          <p>Pick a subject above, then ask your first question.</p>
+        </div>
+      </div>
+
+      <div class="chat-input-row">
+        <input type="text" id="chatInput" placeholder="Ask NESH anything..." autocomplete="off">
+        <button class="chat-send-btn" id="chatSendBtn" aria-label="Send">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const SUPABASE_URL = 'https://zsdsqyowcjifbktbolji.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpzZHNxeW93Y2ppZmJrdGJvbGppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzNzI2MzAsImV4cCI6MjA5NTk0ODYzMH0.k6FeqX_s7y4C662Do6ii9MkRSlkWMFzdF2Knvrwg3b8';
+    // TODO: confirm this is your actual FastAPI backend base URL.
+    const BACKEND_URL = 'https://obscura-backend-production-d7de.up.railway.app';
+
+    const sessionRaw = localStorage.getItem('obscura_session');
+    if (!sessionRaw) window.location.href = 'index.html';
+    const session = JSON.parse(sessionRaw || '{}');
+
+    document.getElementById('logoutBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      localStorage.removeItem('obscura_session');
+      window.location.href = 'index.html';
+    });
+
+    const SUBJECTS = {
+      OL: ['Mathematics', 'Science', 'English', 'Sinhala', 'History', 'Commerce', 'Geography', 'ICT'],
+      science: ['Physics', 'Chemistry', 'Biology', 'Combined Mathematics'],
+      commerce: ['Business Studies', 'Accounting', 'Economics'],
+      arts: ['Political Science', 'Geography', 'History', 'Logic'],
+      technology: ['Engineering Technology', 'Science for Technology', 'ICT']
+    };
+
+    let profile = null;
+    let chatHistory = [];
+
+    const subjectSelect = document.getElementById('subjectSelect');
+    const chatMessages = document.getElementById('chatMessages');
+    const chatEmptyState = document.getElementById('chatEmptyState');
+    const chatInput = document.getElementById('chatInput');
+    const chatSendBtn = document.getElementById('chatSendBtn');
+
+    async function loadProfile() {
+      try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/student_profiles?id=eq.${session.user.id}&select=*`, {
+          headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${session.access_token}`
+          }
+        });
+        const rows = await res.json().catch(() => []);
+        if (Array.isArray(rows) && rows.length > 0) {
+          profile = rows[0];
+        } else {
+          window.location.href = 'onboarding.html';
+          return;
+        }
+      } catch (err) {
+        console.error('Could not load profile', err);
+      }
+
+      const subjectList = profile.exam_type === 'OL' ? SUBJECTS.OL : (SUBJECTS[profile.stream] || SUBJECTS.OL);
+      subjectSelect.innerHTML = subjectList.map(s => `<option value="${s}">${s}</option>`).join('');
+    }
+
+    function addBubble(text, sender, opts = {}) {
+      chatEmptyState.style.display = 'none';
+      const row = document.createElement('div');
+      row.className = `chat-bubble-row ${sender}`;
+      const bubble = document.createElement('div');
+      bubble.className = `chat-bubble ${sender}${opts.loading ? ' loading' : ''}${opts.error ? ' error' : ''}`;
+      bubble.textContent = text;
+      row.appendChild(bubble);
+      chatMessages.appendChild(row);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+      return bubble;
+    }
+
+    async function sendMessage() {
+      const question = chatInput.value.trim();
+      if (!question || !profile) return;
+
+      chatInput.value = '';
+      chatSendBtn.disabled = true;
+      addBubble(question, 'user');
+
+      const loadingBubble = addBubble('Thinking...', 'nesh', { loading: true });
+
+      // O/L doesn't have A/L-style streams, so we send "OL" as the stream
+      // value here. If your backend/papers tag O/L content differently,
+      // this is the one line to change.
+      const streamValue = profile.exam_type === 'OL' ? 'OL' : profile.stream;
+
+      try {
+        const res = await fetch(`${BACKEND_URL}/chat/ask`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            question,
+            stream: streamValue,
+            subject: subjectSelect.value,
+            syllabus: profile.syllabus,
+            medium: profile.medium,
+            student_id: session.user.id,
+            chat_history: chatHistory.slice(-10)
+          })
+        });
+
+        const data = await res.json().catch(() => ({}));
+
+        if (!res.ok) {
+          throw new Error(data.detail ? JSON.stringify(data.detail) : 'NESH couldn\'t answer that just now.');
+        }
+
+        // Response shape isn't documented by the backend, so we check a
+        // few likely field names before falling back to raw JSON.
+        const answer = data.answer || data.response || data.message || data.text
+          || (typeof data === 'string' ? data : JSON.stringify(data));
+
+        loadingBubble.textContent = answer;
+        loadingBubble.classList.remove('loading');
+
+        chatHistory.push({ role: 'user', content: question });
+        chatHistory.push({ role: 'assistant', content: answer });
+      } catch (err) {
+        loadingBubble.textContent = err.message || 'Something went wrong. Please try again.';
+        loadingBubble.classList.remove('loading');
+        loadingBubble.classList.add('error');
+      } finally {
+        chatSendBtn.disabled = false;
+      }
+    }
+
+    chatSendBtn.addEventListener('click', sendMessage);
+    chatInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') sendMessage();
+    });
+
+    loadProfile();
+  </script>
+</body>
+</html>

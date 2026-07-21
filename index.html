@@ -1,208 +1,599 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DataGuard | Stay Safe Online</title>
-
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-}
-
-body {
-  background: #0a0f1c;
-  color: #fff;
-}
-
-/* NAVBAR */
-nav {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px;
-  background: #111827;
-}
-
-nav h1 {
-  color: #4f46e5;
-}
-
-nav ul {
-  display: flex;
-  gap: 20px;
-  list-style: none;
-}
-
-nav a {
-  color: white;
-  text-decoration: none;
-}
-
-/* SECTIONS */
-section {
-  padding: 40px;
-}
-
-/* CARD STYLE */
-.card {
-  background: #111827;
-  padding: 20px;
-  border-radius: 15px;
-  margin-top: 20px;
-}
-
-/* BUTTON */
-button {
-  background: #4f46e5;
-  border: none;
-  padding: 10px 15px;
-  color: white;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-button:hover {
-  background: #6366f1;
-}
-
-/* INPUT */
-input {
-  padding: 10px;
-  border-radius: 8px;
-  border: none;
-  width: 100%;
-  margin-top: 10px;
-}
-
-/* RESULT TEXT */
-.result {
-  margin-top: 10px;
-  font-weight: bold;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Obscura — Your AI-powered study companion</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 </head>
-
 <body>
 
-<!-- NAVBAR -->
-<nav>
-  <h1>DataGuard</h1>
-  <ul>
-    <li><a href="#quiz">Safety Check</a></li>
-    <li><a href="#password">Password</a></li>
-    <li><a href="#scam">Scam Game</a></li>
-  </ul>
-</nav>
+  <!-- ── NAV ── -->
+  <nav>
+    <a href="#hero" class="logo">
+      <img src="assets/logo.png" alt="Obscura logo">
+      OBSCURA
+    </a>
+    <ul class="nav-links">
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#nesh">NESH AI</a></li>
+      <li><a href="#robot">Robot</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#" onclick="alert('App download coming soon!'); return false;">Download</a></li>
+      <li><a href="#download" class="nav-cta js-signup-trigger">Sign Up</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#hero" onclick="closeMobile()">Home</a>
+      <a href="#about" onclick="closeMobile()">About</a>
+      <a href="#features" onclick="closeMobile()">Features</a>
+      <a href="#nesh" onclick="closeMobile()">NESH AI</a>
+      <a href="#robot" onclick="closeMobile()">Robot</a>
+      <a href="#contact" onclick="closeMobile()">Contact</a>
+      <a href="#" onclick="alert('App download coming soon!'); closeMobile(); return false;">Download</a>
+      <a href="#download" class="js-signup-trigger" onclick="closeMobile()">Sign Up</a>
+    </div>
+  </nav>
 
-<!-- HERO -->
-<section>
-  <h2>Protect Your Digital Life 🔐</h2>
-  <p>Learn how safe you are online and improve your security instantly.</p>
-</section>
+  <!-- ── HERO ── -->
+  <section class="hero" id="hero">
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="assets/hero-bg.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Study smarter.<br>Score <span class="accent">higher.</span></h1>
+      <p>Meet NESH, your AI-powered study companion built for O/L and A/L students. Past papers, smart planning, and real-time help, all in one place.</p>
+      <a href="#download" class="btn-primary js-signup-trigger">Get Started</a>
+    </div>
+  </section>
 
-<!-- SAFETY QUIZ -->
-<section id="quiz">
-  <h2>🧠 Safety Checker</h2>
-  <div class="card">
+  <!-- ── ABOUT ── -->
+  <section class="about" id="about">
+    <div class="about-inner">
+      <div class="about-text">
+        <div class="section-label reveal">About</div>
+        <h2 class="section-title reveal">Built for students.<br>Powered by AI.</h2>
+        <p class="about-body reveal">Obscura is a project built by a passionate team of Sri Lankan students who know exactly how stressful O/L and A/L exams can be. We built the tool we wish we had.</p>
+        <p class="about-body reveal">NESH is our AI tutor, trained on real past papers, available in English, Sinhala, and Tamil, and designed to feel like a brilliant friend who always has time for you.</p>
+        <a href="journey.html" class="plan-btn outline about-journey-btn reveal">See how we built this →</a>
+      </div>
+      <div class="about-image reveal">
+        <img src="assets/mascot_wave.png" alt="NESH waving" class="about-mascot">
+      </div>
+    </div>
+  </section>
 
-    <p>Do you use the same password everywhere?</p>
-    <button onclick="answer(0)">Yes</button>
-    <button onclick="answer(1)">No</button>
+  <!-- ── FEATURES ── -->
+  <section class="features" id="features">
+    <div class="section-label reveal">Features</div>
+    <h2 class="section-title reveal">Everything you need to ace your exams</h2>
+    <p class="section-sub reveal">6+ powerful tools, one app, built around how students actually study.</p>
+    <div class="features-grid">
+      <div class="feature-card reveal">
+        <div class="feature-icon-box purple">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 5.5C4 4.67 4.67 4 5.5 4h13c.83 0 1.5.67 1.5 1.5v9c0 .83-.67 1.5-1.5 1.5H9l-4 4v-4H5.5C4.67 16 4 15.33 4 14.5v-9Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+            <circle cx="9" cy="10" r="1.1" fill="currentColor"/>
+            <circle cx="12" cy="10" r="1.1" fill="currentColor"/>
+            <circle cx="15" cy="10" r="1.1" fill="currentColor"/>
+          </svg>
+        </div>
+        <h3>NESH AI Chat</h3>
+        <p>Ask anything, NESH searches real past papers and explains concepts clearly in your language.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon-box orange">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6.5 3.5h8l3 3v13a1 1 0 0 1-1 1h-10a1 1 0 0 1-1-1v-15a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+            <path d="M14 3.5v3h3" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+            <path d="M8.5 12.5h7M8.5 15.5h7M8.5 18h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>Past Papers</h3>
+        <p>Access years of O/L and A/L past papers, track your scores, and identify weak areas over time.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon-box red">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="13" r="8" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M12 9v4l2.6 2.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M9.5 2.5h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>Pomodoro Timer</h3>
+        <p>Study in focused sprints with short breaks, a proven technique to stay sharp without burning out.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon-box green">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="5.5" y="7.5" width="12" height="14" rx="2" transform="rotate(-8 11.5 14.5)" stroke="currentColor" stroke-width="1.7"/>
+            <rect x="7" y="4" width="12" height="14" rx="2" fill="#F9F7FF" stroke="currentColor" stroke-width="1.7"/>
+            <path d="M10 9h6M10 12h6M10 15h3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>Smart Flashcards</h3>
+        <p>Create and review flashcard decks for any subject, track progress, and master key concepts fast.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon-box blue">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="5" width="16" height="15" rx="2" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M4 9.5h16" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M8 3v3.2M16 3v3.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <circle cx="8.3" cy="13" r="1" fill="currentColor"/>
+            <circle cx="12" cy="13" r="1" fill="currentColor"/>
+            <circle cx="15.7" cy="13" r="1" fill="currentColor"/>
+            <circle cx="8.3" cy="16.5" r="1" fill="currentColor"/>
+            <circle cx="12" cy="16.5" r="1" fill="currentColor"/>
+          </svg>
+        </div>
+        <h3>Study Planner</h3>
+        <p>Plan your week around your syllabus and exam dates, stay organised, and never miss a deadline.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon-box teal">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M15.3 15.3 20 20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M8 10.5h5M10.5 8v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+          </svg>
+        </div>
+        <h3>Quick Search</h3>
+        <p>Search semantically across every past paper, find exactly what you need even without exact keywords.</p>
+      </div>
+    </div>
+  </section>
 
-    <p>Is your account private?</p>
-    <button onclick="answer(1)">Yes</button>
-    <button onclick="answer(0)">No</button>
+  <!-- ── UNLOCK MORE ── -->
+  <section class="unlock-section" id="unlock">
+    <div class="section-label reveal">Plans</div>
+    <h2 class="section-title reveal">Unlock more with Obscura</h2>
+    <p class="section-sub reveal">Choose what works for you, start free, upgrade when you're ready.</p>
 
-    <p>Do you use 2FA?</p>
-    <button onclick="answer(1)">Yes</button>
-    <button onclick="answer(0)">No</button>
+    <div class="plans-grid reveal">
+      <div class="plan-card">
+        <h3>Free Forever</h3>
+        <p class="plan-desc">Essential tools to get started.</p>
+        <div class="plan-price">Rs. 0 <span>/month</span></div>
+        <ul class="plan-features">
+          <li>✓ NESH AI Chat (limited)</li>
+          <li>✓ 5 Past Papers per month</li>
+          <li>✓ Pomodoro Timer</li>
+          <li>✓ Basic Flashcards</li>
+          <li class="no">✗ Unlimited Past Papers</li>
+          <li class="no">✗ AI Study Plan</li>
+          <li class="no">✗ Analytics Dashboard</li>
+          <li class="no">✗ RAG Smart Search</li>
+        </ul>
+        <a href="#download" class="plan-btn outline js-signup-trigger">Get Started</a>
+      </div>
+      <div class="plan-card featured">
+        <div class="plan-badge">Most Popular</div>
+        <h3>Obscura Pro</h3>
+        <p class="plan-desc">Everything you need to ace exams.</p>
+        <div class="plan-price">Rs. 990 <span>/month</span></div>
+        <ul class="plan-features">
+          <li>✓ Unlimited NESH AI Chat</li>
+          <li>✓ Unlimited Past Papers</li>
+          <li>✓ Pomodoro Timer</li>
+          <li>✓ Unlimited Flashcards</li>
+          <li>✓ AI Study Plan</li>
+          <li>✓ Analytics Dashboard</li>
+          <li>✓ RAG Smart Search</li>
+          <li>✓ Priority Support</li>
+        </ul>
+        <a href="#download" class="plan-btn filled js-signup-trigger">Get Started</a>
+      </div>
+    </div>
 
-    <button onclick="calculateScore()">Check Score</button>
+    <div class="comparison-table reveal">
+      <h3 class="comparison-title">Feature Comparison</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Free</th>
+            <th>Pro</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>NESH AI Chat</td><td>Limited</td><td>✓ Unlimited</td></tr>
+          <tr><td>Past Papers</td><td>5/month</td><td>✓ Unlimited</td></tr>
+          <tr><td>Pomodoro Timer</td><td>✓</td><td>✓</td></tr>
+          <tr><td>Flashcards</td><td>✓ Basic</td><td>✓ Unlimited</td></tr>
+          <tr><td>Study Planner</td><td>✓</td><td>✓</td></tr>
+          <tr><td>AI Study Plan</td><td>✗</td><td>✓</td></tr>
+          <tr><td>Analytics Dashboard</td><td>✗</td><td>✓</td></tr>
+          <tr><td>RAG Smart Search</td><td>✗</td><td>✓</td></tr>
+          <tr><td>Sinhala and Tamil support</td><td>✓</td><td>✓</td></tr>
+          <tr><td>Priority Support</td><td>✗</td><td>✓</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 
-    <div class="result" id="quizResult"></div>
+  <!-- ── NESH AI SECTION (with screenshot) ── -->
+  <section class="nesh-section" id="nesh">
+    <div class="nesh-inner">
+      <div class="nesh-text">
+        <div class="section-label reveal">NESH AI</div>
+        <h2 class="section-title reveal">Your personal AI tutor.<br>Available 24/7.</h2>
+        <p class="about-body reveal">NESH is trained on real past papers, so every answer is grounded, accurate, and built for your syllabus. Ask in English, Sinhala, or Tamil.</p>
+        <div class="nesh-chips-vertical">
+          <span class="nesh-chip reveal">Answers from past papers</span>
+          <span class="nesh-chip reveal">English, Sinhala and Tamil</span>
+          <span class="nesh-chip reveal">O/L and A/L focused</span>
+          <span class="nesh-chip reveal">Remembers your conversation</span>
+          <span class="nesh-chip reveal">Instant responses</span>
+        </div>
+      </div>
+      <div class="nesh-screenshot reveal">
+        <div class="phone-mockup">
+          <div class="phone-screen">
+            <div class="chat-header-mock">
+              <div class="chat-avatar-mock" style="overflow:hidden; padding:0;">
+  <img src="assets/mascot_study.png" alt="NESH" style="width:100%; height:100%; object-fit:cover; border-radius:10px;">
+</div>
+              <div>
+                <div class="chat-name">NESH AI</div>
+                <div class="chat-status">● Online</div>
+              </div>
+            </div>
+            <div class="chat-messages">
+              <div class="chat-bubble user-bubble">Explain the law of demand</div>
+              <div class="chat-bubble nesh-bubble">The law of demand states that as price increases, quantity demanded decreases — all else equal. Your 2022 Economics paper covers this in Section B!</div>
+              <div class="chat-bubble user-bubble">Give me a practice question</div>
+              <div class="chat-bubble nesh-bubble">Sure! "Explain using a diagram how a rise in price affects consumer demand for rice in Sri Lanka." (4 marks)</div>
+           </div>
+            <div class="chat-input-mock">
+              <div class="chat-input-field">Ask NESH anything...</div>
+              <div class="chat-send-btn">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:16px;height:16px;">
+                  <path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+<!-- ── POMODORO TRY-OUT ── -->
+<section class="pomodoro-section" id="pomodoro">
+  <div class="section-label reveal">Try It Free</div>
+  <h2 class="section-title reveal">Plan today's study session</h2>
+  <p class="section-sub reveal">Tell us how many hours you've got, we'll build you a focused Pomodoro schedule instantly.</p>
+
+  <div class="pomodoro-box reveal">
+    <div class="pomodoro-input-row" id="pomodoroSetup">
+      <label for="studyHours">How many hours are you studying today?</label>
+      <div class="hour-options">
+        <button class="hour-btn" data-hours="1">1 hr</button>
+        <button class="hour-btn" data-hours="2">2 hrs</button>
+        <button class="hour-btn" data-hours="3">3 hrs</button>
+        <button class="hour-btn" data-hours="4">4 hrs</button>
+        <button class="hour-btn" data-hours="6">6 hrs</button>
+      </div>
+      <button class="btn-primary" id="generatePlanBtn" style="margin-top:24px;">Generate My Plan</button>
+    </div>
+
+    <div class="pomodoro-result" id="pomodoroResult" style="display:none;">
+      <div class="plan-summary" id="planSummary"></div>
+      <div class="plan-schedule" id="planSchedule"></div>
+
+      <div class="timer-display" id="timerDisplay" style="display:none;">
+        <div class="timer-label" id="timerLabel">Focus Session 1</div>
+        <div class="timer-clock" id="timerClock">25:00</div>
+        <div class="timer-controls">
+          <button class="timer-btn" id="pauseBtn">Pause</button>
+          <button class="timer-btn skip" id="skipBtn">Skip</button>
+        </div>
+      </div>
+
+      <button class="btn-primary" id="startTimerBtn" style="margin-top:20px;">Start First Session</button>
+      <button class="plan-reset" id="resetPlanBtn">Start Over</button>
+    </div>
   </div>
 </section>
 
-<!-- PASSWORD CHECKER -->
-<section id="password">
-  <h2>🔐 Password Strength Checker</h2>
-  <div class="card">
-    <input type="text" id="passwordInput" placeholder="Enter your password">
-    <button onclick="checkPassword()">Check Strength</button>
+  <!-- ── ROBOT SECTION (3D model only) ── -->
+  <section class="robot-section" id="robot">
+    <div class="section-label reveal">IoT Companion</div>
+    <h2 class="section-title reveal">Meet NESH in real life.</h2>
+    <p class="section-sub reveal">A physical AI robot companion, press a button, ask NESH anything, get a voice response. Coming soon.</p>
+    <div class="robot-viewer reveal">
+      <model-viewer
+  src="assets/nesh-robot.glb"
+  alt="NESH Robot 3D model"
+  camera-controls
+  camera-orbit="0deg 75deg 105%"
+  field-of-view="30deg"
+  shadow-intensity="1.4"
+  exposure="0.75"
+  shadow-softness="0.8"
+  environment-image="neutral"
+  style="width: 100%; height: 500px; border-radius: 20px; background: #0D0814;">
+</model-viewer>
+      <div class="robot-overlay">
+        <button class="js-signup-trigger robot-overlay-btn" type="button">Notify Me</button>
+      </div>
+    </div>
+  </section>
 
-    <div class="result" id="passwordResult"></div>
+  <!-- ── NESH NEEDS FUEL ── -->
+<section class="snacks-section" id="snacks">
+  <div class="snacks-inner">
+    <div class="snacks-text">
+      <div class="section-label reveal">NESH Needs Fuel</div>
+      <p class="snacks-quote reveal">" Help me stay sharp and snappy! "</p>
+      <p class="snacks-body reveal"><strong>This app will always be free to use.</strong> But if you'd like to support our mission, feel free to feed the fox. Any amount helps!</p>
+      <div class="snacks-btns reveal">
+        <a href="https://buymeacoffee.com/yourlink" target="_blank" class="snacks-btn coffee">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:16px;height:16px;">
+            <path d="M5 9h12v5a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4V9Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M17 10.5h1.5a2.2 2.2 0 0 1 0 4.4H17" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M8.5 6c0-1 .8-1 .8-2M12 6c0-1 .8-1 .8-2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+          Buy NESH a Coffee
+        </a>
+        <a href="https://paypal.me/yourlink" target="_blank" class="snacks-btn paypal">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:16px;height:16px;">
+            <path d="M8 5.5h6.2c2.3 0 3.8 1.4 3.4 3.6-.5 2.7-2.4 4-4.9 4H10l-1 5.4" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M9.5 9.5H15c2.1 0 3.4 1.3 3 3.4-.4 2.4-2.2 3.6-4.5 3.6h-2.3l-.9 4.9" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" opacity="0.55"/>
+          </svg>
+          PayPal
+        </a>
+      </div>
+      <p class="snacks-small reveal">Every contribution helps us keep improving and maintaining this free service for everyone.</p>
+    </div>
+    <div class="snacks-image reveal">
+      <img src="assets/mascot_sad.png" alt="NESH needs fuel" class="snacks-mascot-big">
+    </div>
   </div>
 </section>
+<!-- ── TESTIMONIALS ── -->
+  <section class="testimonials-section" id="testimonials">
+    <div class="testimonials-inner">
+      <div class="testimonials-rating reveal">
+        <div class="rating-number">4.8</div>
+        <div class="rating-stars-big">★★★★★</div>
+        <div class="rating-label">Excellent</div>
+        <div class="rating-count">Based on early feedback</div>
+        <div class="rating-source">from teachers &amp; students</div>
+      </div>
 
-<!-- SCAM GAME -->
-<section id="scam">
-  <h2>🚨 Scam Detector Game</h2>
-  <div class="card">
+      <div class="testimonials-scroll-wrap">
+        <button class="testimonial-arrow left" id="testimonialPrev" aria-label="Previous">‹</button>
+        <div class="testimonials-track" id="testimonialsTrack">
+          <div class="testimonial-card">
+            <div class="testimonial-card-head">
+              <div class="testimonial-avatar">SP</div>
+              <div>
+                <div class="testimonial-name">Mrs. S. Perera</div>
+                <div class="testimonial-role">Mathematics Teacher</div>
+              </div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-quote">"My students use NESH to revise past papers on their own time, and I've genuinely seen their exam confidence improve this term."</p>
+          </div>
 
-    <p id="scamText">
-      "Congratulations! You won $1000! Click this link now!"
-    </p>
+          <div class="testimonial-card">
+            <div class="testimonial-card-head">
+              <div class="testimonial-avatar">RJ</div>
+              <div>
+                <div class="testimonial-name">Mr. R. Jayasinghe</div>
+                <div class="testimonial-role">Economics Teacher</div>
+              </div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-quote">"Having answers grounded in real past papers instead of generic explanations makes a real difference for A/L students under pressure."</p>
+          </div>
 
-    <button onclick="scamAnswer('scam')">Scam</button>
-    <button onclick="scamAnswer('safe')">Safe</button>
+          <div class="testimonial-card">
+            <div class="testimonial-card-head">
+              <div class="testimonial-avatar">NF</div>
+              <div>
+                <div class="testimonial-name">Mrs. N. Fernando</div>
+                <div class="testimonial-role">Science Teacher</div>
+              </div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-quote">"I recommend the Pomodoro planner to every student I mentor. It's such a simple idea, but it actually gets them to sit down and study."</p>
+          </div>
+        </div>
+        <button class="testimonial-arrow right" id="testimonialNext" aria-label="Next">›</button>
+      </div>
+    </div>
+  </section>
+  <!-- ── CONTACT ── -->
+  <section class="contact-section" id="contact">
+    <div class="section-label reveal">Contact</div>
+    <h2 class="section-title reveal">Get in touch.</h2>
+    <p class="section-sub reveal">Questions, feedback, or just want to say hi to the fox? We'd love to hear from you.</p>
+    <div class="contact-links reveal">
+  <a href="mailto:obscurabytechlume@gmail.com" class="contact-link">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="2.5" y="4.5" width="19" height="15" rx="2.5" stroke="currentColor" stroke-width="1.8"/>
+      <path d="M3.5 6L12 13L20.5 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    obscurabytechlume@gmail.com
+  </a>
+  <a href="https://www.instagram.com/obscura.edux/" target="_blank" class="contact-link">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.8"/>
+      <circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.8"/>
+      <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/>
+    </svg>
+    Instagram
+  </a>
+  <a href="https://x.com/" target="_blank" class="contact-link">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 4L20 20M20 4L4 20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+    Twitter
+  </a>
+</div>
+  </section>
 
-    <div class="result" id="scamResult"></div>
+ <!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-col footer-brand">
+      <a href="#hero" class="logo footer-logo">
+        <img src="assets/logo.png" alt="Obscura logo">
+        OBSCURA
+      </a>
+      <p class="footer-tagline">Your all-in-one study companion, built for O/L and A/L students, everywhere.</p>
+      <div class="footer-socials">
+        <a href="https://www.instagram.com/obscura.edux/" target="_blank" class="social-icon" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.8"/>
+            <circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.8"/>
+            <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/>
+          </svg>
+        </a>
+        <a href="https://x.com/" target="_blank" class="social-icon" aria-label="X">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 4L20 20M20 4L4 20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </a>
+        <a href="mailto:obscurabytechlume@gmail.com" class="social-icon" aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2.5" y="4.5" width="19" height="15" rx="2.5" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M3.5 6L12 13L20.5 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <a href="#hero">Home</a>
+      <a href="#about">About</a>
+      <a href="#features">Features</a>
+      <a href="#contact">Contact</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Features</h4>
+      <a href="#features">NESH AI Chat</a>
+      <a href="#features">Past Papers</a>
+      <a href="#features">Pomodoro Timer</a>
+      <a href="#features">Flashcards</a>
+    </div>
+
+    <div class="footer-col">
+  <h4>Get in Touch</h4>
+  <a href="mailto:obscurabytechlume@gmail.com" class="footer-contact-link">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="2.5" y="4.5" width="19" height="15" rx="2.5" stroke="currentColor" stroke-width="1.8"/>
+      <path d="M3.5 6L12 13L20.5 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    obscurabytechlume@gmail.com
+  </a>
+  <a href="https://www.instagram.com/obscura.edux/" target="_blank" class="footer-contact-link">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.8"/>
+      <circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.8"/>
+      <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/>
+    </svg>
+    Instagram
+  </a>
+  <a href="https://x.com/" target="_blank" class="footer-contact-link">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 4L20 20M20 4L4 20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+    Twitter
+  </a>
+</div>
   </div>
-</section>
 
-<script>
-/* QUIZ */
-let score = 0;
+  <div class="footer-bottom">
+    <p>© 2026 Obscura. All rights reserved. Built for VisioNEX Inter-School Hackathon Competition.</p>
+    <div class="footer-bottom-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+    </div>
+  </div>
+</footer>
+<!-- ── NEWSLETTER POPUP ── -->
+  <div class="newsletter-overlay" id="newsletterOverlay">
+    <div class="newsletter-card">
+      <button class="modal-close" id="newsletterClose" type="button" aria-label="Close">&times;</button>
+      <img src="assets/mascot_wave.png" alt="NESH waving" class="newsletter-mascot">
+      <form id="newsletterForm" class="newsletter-form">
+        <h3>Get study tips from NESH</h3>
+        <p class="modal-sub">NESH will send you helpful tips and updates straight to your inbox, no spam, unsubscribe anytime.</p>
+        <input type="email" id="newsletterEmail" required placeholder="you@example.com" autocomplete="email">
+        <div class="modal-error" id="newsletterError"></div>
+        <button type="submit" class="btn-primary modal-submit" id="newsletterSubmit">Subscribe</button>
+        <a href="#" id="newsletterNoThanks" class="modal-switch-plain">No thanks</a>
+      </form>
+      <div class="newsletter-success" id="newsletterSuccess">
+        <h3>You're subscribed!</h3>
+        <p>Thanks for joining, we'll keep you posted.</p>
+      </div>
+    </div>
+  </div>
 
-function answer(value) {
-  score += value;
-}
+  <!-- ── SIGNUP MODAL ── -->
+  <div class="modal-overlay" id="signupOverlay">
+    <div class="modal-card">
+      <button class="modal-close" id="modalClose" type="button" aria-label="Close">&times;</button>
 
-function calculateScore() {
-  let result = "";
+      <form id="signupForm" class="modal-form">
+        <img src="assets/logo.png" alt="Obscura logo" class="modal-logo">
+        <h3>Create your account</h3>
+        <p class="modal-sub">Get instant access to Obscura on the web, no app download needed.</p>
 
-  if (score <= 1) result = "⚠️ Very Unsafe";
-  else if (score == 2) result = "⚠️ Needs Improvement";
-  else result = "✅ You're Safe!";
+        <label for="signupEmail">Email</label>
+        <input type="email" id="signupEmail" name="email" required placeholder="you@example.com" autocomplete="email">
 
-  document.getElementById("quizResult").innerText = result;
+        <label for="signupPassword">Password</label>
+        <input type="password" id="signupPassword" name="password" required minlength="8" placeholder="At least 8 characters" autocomplete="new-password">
 
-  score = 0; // reset
-}
+        <div class="modal-error" id="modalError"></div>
 
-/* PASSWORD CHECK */
-function checkPassword() {
-  let password = document.getElementById("passwordInput").value;
-  let strength = "Weak";
+        <button type="submit" class="btn-primary modal-submit" id="modalSubmit">Create Account</button>
+        <p class="modal-switch">Already have an account? <a href="#" id="switchToLogin">Log in</a></p>
+      </form>
 
-  if (password.length > 8 &&
-      /[A-Z]/.test(password) &&
-      /[0-9]/.test(password)) {
-    strength = "Strong 💪";
-  } else if (password.length > 5) {
-    strength = "Medium ⚠️";
-  }
+      <form id="loginForm" class="modal-form" style="display:none;">
+        <img src="assets/logo.png" alt="Obscura logo" class="modal-logo">
+        <h3>Welcome back</h3>
+        <p class="modal-sub">Log in to continue with Obscura.</p>
 
-  document.getElementById("passwordResult").innerText = "Strength: " + strength;
-}
+        <label for="loginEmail">Email</label>
+        <input type="email" id="loginEmail" name="email" required placeholder="you@example.com" autocomplete="email">
 
-/* SCAM GAME */
-function scamAnswer(choice) {
-  let result = "";
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" name="password" required placeholder="Your password" autocomplete="current-password">
 
-  if (choice === "scam") {
-    result = "✅ Correct! This is a scam.";
-  } else {
-    result = "❌ Wrong! This is a scam.";
-  }
+        <div class="modal-error" id="loginError"></div>
 
-  document.getElementById("scamResult").innerText = result;
-}
-</script>
+        <button type="submit" class="btn-primary modal-submit" id="loginSubmit">Log In</button>
+        <p class="modal-switch">Don't have an account? <a href="#" id="switchToSignup">Sign up</a></p>
+      </form>
 
+      <div class="modal-success" id="modalSuccess">
+        <h3>You're in!</h3>
+        <p id="modalSuccessText">Your account has been created. Welcome to Obscura.</p>
+        <button class="btn-primary" id="modalDoneBtn" type="button">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>

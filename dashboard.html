@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — Obscura</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .app-shell {
+      display: flex;
+      min-height: 100vh;
+      background: #F9F7FF;
+    }
+    .app-sidebar {
+      width: 240px;
+      flex-shrink: 0;
+      background: #ffffff;
+      border-right: 1px solid rgba(124,92,191,0.1);
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+    }
+    .app-sidebar .logo {
+      padding: 0 8px;
+      margin-bottom: 32px;
+      font-size: 18px;
+    }
+    .app-sidebar .logo img { width: 36px; height: 36px; }
+    .app-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      color: rgba(45,31,78,0.6);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 4px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .app-nav-item svg { width: 20px; height: 20px; flex-shrink: 0; }
+    .app-nav-item:hover { background: rgba(124,92,191,0.06); }
+    .app-nav-item.active {
+      background: rgba(124,92,191,0.1);
+      color: #7C5CBF;
+      font-weight: 600;
+    }
+    .app-nav-soon {
+      margin-left: auto;
+      font-size: 10px;
+      font-weight: 700;
+      color: rgba(124,92,191,0.5);
+      background: rgba(124,92,191,0.08);
+      padding: 2px 6px;
+      border-radius: 100px;
+    }
+    .app-sidebar-footer {
+      margin-top: auto;
+      padding-top: 16px;
+      border-top: 1px solid rgba(124,92,191,0.1);
+    }
+    .app-main {
+      flex: 1;
+      padding: 40px 48px;
+      max-width: 1000px;
+    }
+    .app-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 28px;
+    }
+    .app-greeting {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: #2D1F4E;
+      margin-bottom: 6px;
+    }
+    .app-greeting-sub { color: rgba(45,31,78,0.6); }
+
+    /* Today's Focus card */
+    .focus-card {
+      background: linear-gradient(135deg, #7C5CBF 0%, #9B7ED9 100%);
+      border-radius: 20px;
+      padding: 28px 32px;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
+      box-shadow: 0 16px 40px rgba(124,92,191,0.25);
+    }
+    .focus-card-text { flex: 1; }
+    .focus-card-label { font-size: 14px; opacity: 0.85; margin-bottom: 4px; }
+    .focus-card-title { font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 16px; }
+    .focus-progress-bar {
+      width: 100%;
+      max-width: 340px;
+      height: 8px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 100px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+    .focus-progress-fill {
+      height: 100%;
+      background: #ffffff;
+      border-radius: 100px;
+      transition: width 0.4s ease;
+    }
+    .focus-progress-label { font-size: 13px; opacity: 0.85; }
+    .focus-card-icon {
+      width: 64px;
+      height: 64px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-left: 20px;
+    }
+    .focus-card-icon svg { width: 32px; height: 32px; }
+
+    /* Quick actions */
+    .section-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: #2D1F4E;
+      margin-bottom: 16px;
+    }
+    .quick-actions-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+    .quick-action-card {
+      background: #ffffff;
+      border: 1px solid rgba(124,92,191,0.1);
+      border-radius: 16px;
+      padding: 20px;
+      text-decoration: none;
+      display: block;
+      position: relative;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .quick-action-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(124,92,191,0.12);
+    }
+    .quick-action-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+    .quick-action-icon svg { width: 20px; height: 20px; }
+    .quick-action-icon.purple { background: rgba(124,92,191,0.12); color: #7C5CBF; }
+    .quick-action-icon.blue   { background: rgba(74,144,217,0.12); color: #3A7FC7; }
+    .quick-action-icon.green  { background: rgba(91,184,138,0.12); color: #4A9E71; }
+    .quick-action-icon.red    { background: rgba(224,92,92,0.12); color: #D14F4F; }
+    .quick-action-icon.orange { background: rgba(245,166,35,0.12); color: #E08F1D; }
+    .quick-action-icon.teal   { background: rgba(72,196,196,0.12); color: #34ABAB; }
+    .quick-action-title { font-size: 14px; font-weight: 600; color: #2D1F4E; margin-bottom: 2px; }
+    .quick-action-sub { font-size: 12px; color: rgba(45,31,78,0.5); }
+    .quick-action-badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      font-size: 10px;
+      font-weight: 700;
+      color: rgba(124,92,191,0.6);
+      background: rgba(124,92,191,0.08);
+      padding: 2px 8px;
+      border-radius: 100px;
+    }
+
+    /* Schedule */
+    .schedule-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .schedule-header a { font-size: 13px; color: #7C5CBF; font-weight: 600; text-decoration: none; }
+    .schedule-list {
+      background: #ffffff;
+      border: 1px solid rgba(124,92,191,0.1);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .schedule-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 20px;
+      border-bottom: 1px solid rgba(124,92,191,0.08);
+    }
+    .schedule-row:last-child { border-bottom: none; }
+    .schedule-time { font-size: 13px; color: rgba(45,31,78,0.5); width: 70px; flex-shrink: 0; }
+    .schedule-info { flex: 1; }
+    .schedule-title { font-size: 14px; font-weight: 600; color: #2D1F4E; }
+    .schedule-title.completed { text-decoration: line-through; color: rgba(45,31,78,0.4); }
+    .schedule-sub { font-size: 12px; color: rgba(45,31,78,0.5); }
+    .schedule-dot { width: 8px; height: 8px; border-radius: 50%; background: #7C5CBF; flex-shrink: 0; }
+    .schedule-empty {
+      padding: 32px 20px;
+      text-align: center;
+      color: rgba(45,31,78,0.5);
+      font-size: 14px;
+    }
+    .schedule-empty a { color: #7C5CBF; font-weight: 600; text-decoration: none; }
+
+    @media (max-width: 900px) {
+      .app-shell { flex-direction: column; }
+      .app-sidebar {
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 12px;
+        border-right: none;
+        border-bottom: 1px solid rgba(124,92,191,0.1);
+      }
+      .app-sidebar .logo { display: none; }
+      .app-nav-item { flex-shrink: 0; }
+      .app-nav-soon { display: none; }
+      .app-sidebar-footer { display: none; }
+      .app-main { padding: 24px; }
+      .quick-actions-grid { grid-template-columns: 1fr 1fr; }
+      .focus-card { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .focus-card-icon { margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-shell">
+    <aside class="app-sidebar">
+      <a href="dashboard.html" class="logo">
+        <img src="assets/logo.png" alt="Obscura logo">
+      </a>
+
+      <a href="dashboard.html" class="app-nav-item active">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 11.5 12 4l8 7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 10v9a1 1 0 0 0 1 1h4v-6h2v6h4a1 1 0 0 0 1-1v-9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Home
+      </a>
+      <a href="focus-room.html" class="app-nav-item">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v4l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Focus Room
+      </a>
+      <a href="chat.html" class="app-nav-item">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 5.5C4 4.67 4.67 4 5.5 4h13c.83 0 1.5.67 1.5 1.5v9c0 .83-.67 1.5-1.5 1.5H9l-4 4v-4H5.5C4.67 16 4 15.33 4 14.5v-9Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        AI Chat
+      </a>
+      <a href="planner.html" class="app-nav-item">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="5" width="16" height="15" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M4 9.5h16" stroke="currentColor" stroke-width="1.8"/><path d="M8 3v3.2M16 3v3.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Planner
+      </a>
+      <a href="#" class="app-nav-item">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 19V10M12 19V5M19 19v-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Progress
+        <span class="app-nav-soon">Soon</span>
+      </a>
+      <a href="#" class="app-nav-item">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.8"/><path d="M5 20c1.5-4 5-5.5 7-5.5S17.5 16 19 20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Profile
+        <span class="app-nav-soon">Soon</span>
+      </a>
+
+      <div class="app-sidebar-footer">
+        <a href="#" class="app-nav-item" id="logoutBtn">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h3M15 16l4-4-4-4M19 12H9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Log Out
+        </a>
+      </div>
+    </aside>
+
+    <main class="app-main">
+      <div class="app-top-row">
+        <div>
+          <div class="app-greeting" id="appGreeting">Welcome back!</div>
+          <p class="app-greeting-sub">Let's make today productive.</p>
+        </div>
+      </div>
+
+      <a href="planner.html" class="focus-card" style="text-decoration:none;">
+        <div class="focus-card-text">
+          <div class="focus-card-label">Today's Focus</div>
+          <div class="focus-card-title" id="focusTitle">No tasks planned yet</div>
+          <div class="focus-progress-bar">
+            <div class="focus-progress-fill" id="focusProgressFill" style="width: 0%;"></div>
+          </div>
+          <div class="focus-progress-label" id="focusProgressLabel">Add tasks in Planner to get started</div>
+        </div>
+        <div class="focus-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="white"><path d="M4 19.5V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v13.5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </a>
+
+      <div class="section-heading">Quick Actions</div>
+      <div class="quick-actions-grid">
+        <a href="chat.html" class="quick-action-card">
+          <div class="quick-action-icon purple">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 5.5C4 4.67 4.67 4 5.5 4h13c.83 0 1.5.67 1.5 1.5v9c0 .83-.67 1.5-1.5 1.5H9l-4 4v-4H5.5C4.67 16 4 15.33 4 14.5v-9Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="quick-action-title">AI Assistant</div>
+          <div class="quick-action-sub">Chat with NESH</div>
+        </a>
+        <a href="planner.html" class="quick-action-card">
+          <div class="quick-action-icon blue">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="5" width="16" height="15" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M4 9.5h16" stroke="currentColor" stroke-width="1.8"/></svg>
+          </div>
+          <div class="quick-action-title">Study Planner</div>
+          <div class="quick-action-sub">Plan your day</div>
+        </a>
+        <a href="#" class="quick-action-card">
+          <span class="quick-action-badge">Soon</span>
+          <div class="quick-action-icon green">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="5.5" y="7.5" width="12" height="14" rx="2" transform="rotate(-8 11.5 14.5)" stroke="currentColor" stroke-width="1.7"/></svg>
+          </div>
+          <div class="quick-action-title">Flashcards</div>
+          <div class="quick-action-sub">Review cards</div>
+        </a>
+        <a href="index.html#pomodoro" class="quick-action-card">
+          <div class="quick-action-icon red">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="13" r="8" stroke="currentColor" stroke-width="1.8"/><path d="M12 9v4l2.6 2.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="quick-action-title">Pomodoro</div>
+          <div class="quick-action-sub">Focus timer</div>
+        </a>
+        <a href="#" class="quick-action-card">
+          <span class="quick-action-badge">Soon</span>
+          <div class="quick-action-icon orange">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.5 3.5h8l3 3v13a1 1 0 0 1-1 1h-10a1 1 0 0 1-1-1v-15a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="quick-action-title">Past Papers</div>
+          <div class="quick-action-sub">Practice now</div>
+        </a>
+        <a href="#" class="quick-action-card">
+          <span class="quick-action-badge">Soon</span>
+          <div class="quick-action-icon teal">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="1.8"/><path d="M15.3 15.3 20 20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </div>
+          <div class="quick-action-title">Quick Search</div>
+          <div class="quick-action-sub">Smart search</div>
+        </a>
+      </div>
+
+      <div class="schedule-header">
+        <div class="section-heading" style="margin-bottom:0;">Today's Schedule</div>
+        <a href="#">View all</a>
+      </div>
+      <div class="schedule-list" id="scheduleList">
+        <div class="schedule-empty">Loading today's schedule...</div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const SUPABASE_URL = 'https://zsdsqyowcjifbktbolji.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpzZHNxeW93Y2ppZmJrdGJvbGppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzNzI2MzAsImV4cCI6MjA5NTk0ODYzMH0.k6FeqX_s7y4C662Do6ii9MkRSlkWMFzdF2Knvrwg3b8';
+
+    const sessionRaw = localStorage.getItem('obscura_session');
+    if (!sessionRaw) {
+      window.location.href = 'index.html';
+    }
+    const session = JSON.parse(sessionRaw || '{}');
+
+    const email = session.user && session.user.email ? session.user.email.split('@')[0] : 'student';
+    document.getElementById('appGreeting').textContent = `Welcome back, ${email}!`;
+
+    document.getElementById('logoutBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      localStorage.removeItem('obscura_session');
+      window.location.href = 'index.html';
+    });
+
+    // ── Load today's tasks from Supabase ──
+    async function loadTodayTasks() {
+      const today = new Date().toISOString().split('T')[0];
+      const scheduleList = document.getElementById('scheduleList');
+
+      try {
+        const res = await fetch(
+          `${SUPABASE_URL}/rest/v1/study_tasks?user_id=eq.${session.user.id}&task_date=eq.${today}&order=scheduled_time.asc`,
+          {
+            headers: {
+              'apikey': SUPABASE_ANON_KEY,
+              'Authorization': `Bearer ${session.access_token}`
+            }
+          }
+        );
+        const tasks = await res.json().catch(() => []);
+
+        if (!Array.isArray(tasks) || tasks.length === 0) {
+          scheduleList.innerHTML = `<div class="schedule-empty">No tasks planned for today yet.</div>`;
+          return;
+        }
+
+        const completed = tasks.filter(t => t.completed).length;
+        document.getElementById('focusTitle').textContent = `Complete ${tasks.length} topic${tasks.length > 1 ? 's' : ''}`;
+        document.getElementById('focusProgressLabel').textContent = `${completed} / ${tasks.length} done`;
+        document.getElementById('focusProgressFill').style.width = `${(completed / tasks.length) * 100}%`;
+
+        scheduleList.innerHTML = tasks.map(t => `
+          <div class="schedule-row">
+            <div class="schedule-time">${t.scheduled_time ? t.scheduled_time.slice(0,5) : '--:--'}</div>
+            <div class="schedule-info">
+              <div class="schedule-title ${t.completed ? 'completed' : ''}">${t.title}</div>
+              ${t.subtitle ? `<div class="schedule-sub">${t.subtitle}</div>` : ''}
+            </div>
+            <div class="schedule-dot"></div>
+          </div>
+        `).join('');
+      } catch (err) {
+        scheduleList.innerHTML = `<div class="schedule-empty">Couldn't load your schedule right now.</div>`;
+      }
+    }
+
+    loadTodayTasks();
+  </script>
+</body>
+</html>

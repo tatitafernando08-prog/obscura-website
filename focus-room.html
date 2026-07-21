@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Focus Room — Obscura</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    html, body { height: 100%; overflow: hidden; }
+
+    .focus-room {
+      position: relative;
+      height: 100vh;
+      width: 100vw;
+      background: linear-gradient(160deg, #2D1F4E 0%, #4A3470 45%, #7C5CBF 100%);
+      overflow: hidden;
+      transition: background 0.6s ease;
+    }
+    .focus-room.theme-pink { background: linear-gradient(160deg, #4E1F3A 0%, #8A3D63 45%, #D96BA0 100%); }
+    .focus-room.theme-owl  { background: linear-gradient(160deg, #0B0F2E 0%, #171B3D 45%, #2E3364 100%); }
+    .focus-room.theme-green{ background: linear-gradient(160deg, #123024 0%, #1F5240 45%, #3F9C77 100%); }
+
+    .focus-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.35;
+      animation: drift 18s ease-in-out infinite;
+      transition: background 0.6s ease;
+    }
+    .focus-blob.b1 { width: 420px; height: 420px; background: #A87FE0; top: -100px; left: -80px; animation-duration: 22s; }
+    .focus-blob.b2 { width: 340px; height: 340px; background: #7C5CBF; bottom: -80px; right: -60px; animation-duration: 26s; animation-delay: -6s; }
+    .focus-blob.b3 { width: 260px; height: 260px; background: #F0EBFF; bottom: 20%; left: 15%; animation-duration: 20s; animation-delay: -3s; opacity: 0.15; }
+
+    .theme-pink .focus-blob.b1 { background: #F2A6C8; }
+    .theme-pink .focus-blob.b2 { background: #D96BA0; }
+    .theme-owl  .focus-blob.b1 { background: #4B5AAF; }
+    .theme-owl  .focus-blob.b2 { background: #2E3364; }
+    .theme-green .focus-blob.b1 { background: #6FD9A8; }
+    .theme-green .focus-blob.b2 { background: #3F9C77; }
+
+    @keyframes drift {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(40px, -30px) scale(1.08); }
+      66% { transform: translate(-30px, 20px) scale(0.95); }
+    }
+
+    .focus-exit {
+      position: absolute; top: 24px; left: 24px; z-index: 5;
+      display: flex; align-items: center; gap: 8px;
+      color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; font-weight: 600;
+      background: rgba(255,255,255,0.1); padding: 10px 18px; border-radius: 100px;
+      backdrop-filter: blur(10px); transition: background 0.2s;
+    }
+    .focus-exit:hover { background: rgba(255,255,255,0.18); }
+    .focus-exit svg { width: 16px; height: 16px; }
+
+    .theme-picker {
+      position: absolute; top: 24px; right: 24px; z-index: 5;
+      display: flex; gap: 8px;
+      background: rgba(255,255,255,0.1); padding: 8px; border-radius: 100px;
+      backdrop-filter: blur(10px);
+    }
+    .theme-dot {
+      width: 26px; height: 26px; border-radius: 50%; cursor: pointer;
+      border: 2px solid transparent; transition: border-color 0.2s;
+    }
+    .theme-dot.active { border-color: white; }
+    .theme-dot.purple { background: #7C5CBF; }
+    .theme-dot.pink { background: #D96BA0; }
+    .theme-dot.owl { background: #2E3364; }
+    .theme-dot.green { background: #3F9C77; }
+
+    .focus-body {
+      position: relative; z-index: 2; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px; gap: 40px;
+    }
+
+    .focus-content { display: flex; flex-direction: column; align-items: center; color: white; }
+    .focus-clock { font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 500; opacity: 0.85; margin-bottom: 6px; }
+    .focus-greeting { font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700; margin-bottom: 32px; text-align: center; }
+
+    .focus-timer-card {
+      background: rgba(255,255,255,0.1); backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.15); border-radius: 28px;
+      padding: 40px 56px; text-align: center; margin-bottom: 24px;
+    }
+    .focus-timer-label { font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; opacity: 0.7; margin-bottom: 12px; }
+    .focus-timer-clock { font-family: 'Space Grotesk', sans-serif; font-size: 72px; font-weight: 700; line-height: 1; margin-bottom: 24px; }
+    .focus-timer-controls { display: flex; gap: 12px; justify-content: center; }
+    .focus-btn { border: none; border-radius: 100px; padding: 12px 28px; font-size: 14px; font-weight: 600; cursor: pointer; transition: transform 0.15s, background 0.2s; }
+    .focus-btn:hover { transform: translateY(-1px); }
+    .focus-btn.primary { background: white; color: #2D1F4E; }
+    .focus-btn.secondary { background: rgba(255,255,255,0.15); color: white; }
+
+    .focus-quote-wrap {
+      max-width: 320px; text-align: center; margin-bottom: 8px; min-height: 80px;
+      transition: opacity 0.4s ease;
+    }
+    .focus-quote-text {
+      font-size: 19px; font-style: italic; font-weight: 500;
+      color: rgba(255,255,255,0.9); line-height: 1.5; margin-bottom: 8px;
+    }
+    .focus-quote-author {
+      font-size: 13px; color: rgba(255,255,255,0.6); font-weight: 600;
+    }
+
+    .focus-side {
+      display: flex; flex-direction: column; gap: 20px; width: 320px; flex-shrink: 0;
+    }
+    .glass-panel {
+      background: rgba(255,255,255,0.08); backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.12); border-radius: 20px; padding: 20px; color: white;
+    }
+    .panel-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.7; margin-bottom: 14px; }
+
+    .focus-task-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; font-size: 14px; }
+    .focus-task-check { width: 18px; height: 18px; border-radius: 6px; border: 2px solid rgba(255,255,255,0.5); flex-shrink: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    .focus-task-check.done { background: white; border-color: white; }
+    .focus-task-check.done svg { width: 12px; height: 12px; color: #7C5CBF; }
+    .focus-task-title { flex: 1; }
+    .focus-task-title.done { text-decoration: line-through; opacity: 0.5; }
+    .focus-tasks-empty { font-size: 13px; opacity: 0.6; }
+
+    .spotify-swap {
+      display: flex; gap: 6px; margin-bottom: 12px;
+    }
+    .spotify-swap input {
+      flex: 1; padding: 8px 12px; border-radius: 100px; border: none;
+      background: rgba(255,255,255,0.15); color: white; font-size: 12px; outline: none;
+    }
+    .spotify-swap input::placeholder { color: rgba(255,255,255,0.5); }
+    .spotify-swap button {
+      border: none; border-radius: 100px; padding: 8px 14px; font-size: 12px;
+      font-weight: 600; background: white; color: #2D1F4E; cursor: pointer;
+    }
+
+    @media (max-width: 1000px) {
+      .focus-body { flex-direction: column; overflow-y: auto; padding: 90px 20px 24px; }
+      .focus-side { width: 100%; max-width: 360px; }
+    }
+    @media (max-width: 600px) {
+      .focus-timer-card { padding: 28px 32px; }
+      .focus-timer-clock { font-size: 52px; }
+      .focus-greeting { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="focus-room" id="focusRoom">
+    <div class="focus-blob b1"></div>
+    <div class="focus-blob b2"></div>
+    <div class="focus-blob b3"></div>
+
+    <a href="dashboard.html" class="focus-exit">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Exit Focus Room
+    </a>
+
+    <div class="theme-picker">
+      <div class="theme-dot purple active" data-theme="purple" title="Purple"></div>
+      <div class="theme-dot pink" data-theme="pink" title="Pink"></div>
+      <div class="theme-dot owl" data-theme="owl" title="Owl"></div>
+      <div class="theme-dot green" data-theme="green" title="Green"></div>
+    </div>
+
+    <div class="focus-body">
+      <div class="focus-content">
+        <div class="focus-clock" id="focusClock">--:--</div>
+        <div class="focus-greeting" id="focusGreeting">Let's get focused.</div>
+
+        <div class="focus-timer-card">
+          <div class="focus-timer-label" id="timerLabel">Focus Session</div>
+          <div class="focus-timer-clock" id="timerClock">25:00</div>
+          <div class="focus-timer-controls">
+            <button class="focus-btn primary" id="startPauseBtn">Start</button>
+            <button class="focus-btn secondary" id="skipBtn">Skip</button>
+          </div>
+        </div>
+
+        <div class="focus-quote-wrap" id="focusQuoteWrap">
+          <p class="focus-quote-text" id="focusQuoteText"></p>
+          <p class="focus-quote-author" id="focusQuoteAuthor"></p>
+        </div>
+      </div>
+
+      <div class="focus-side">
+        <div class="glass-panel">
+          <div class="panel-title">Now Playing</div>
+          <div class="spotify-swap">
+            <input type="text" id="spotifyUrlInput" placeholder="Paste a Spotify playlist link...">
+            <button id="spotifySwapBtn">Load</button>
+          </div>
+          <iframe id="spotifyFrame"
+            style="border-radius: 12px;"
+            src="https://open.spotify.com/embed/playlist/37i9dQZF1DWWQRwui0ExPn?utm_source=generator&theme=0"
+            width="100%" height="152" frameborder="0"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy">
+          </iframe>
+        </div>
+
+        <div class="glass-panel">
+          <div class="panel-title">Today's Tasks</div>
+          <div id="focusTaskList">
+            <div class="focus-tasks-empty">Loading...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const SUPABASE_URL = 'https://zsdsqyowcjifbktbolji.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpzZHNxeW93Y2ppZmJrdGJvbGppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzNzI2MzAsImV4cCI6MjA5NTk0ODYzMH0.k6FeqX_s7y4C662Do6ii9MkRSlkWMFzdF2Knvrwg3b8';
+
+    const sessionRaw = localStorage.getItem('obscura_session');
+    if (!sessionRaw) window.location.href = 'index.html';
+    const session = JSON.parse(sessionRaw || '{}');
+
+    // ── Theme picker ──
+    const focusRoomEl = document.getElementById('focusRoom');
+    const themeDots = document.querySelectorAll('.theme-dot');
+
+    function applyTheme(theme) {
+      focusRoomEl.classList.remove('theme-pink', 'theme-owl', 'theme-green');
+      if (theme !== 'purple') focusRoomEl.classList.add(`theme-${theme}`);
+      themeDots.forEach(d => d.classList.toggle('active', d.dataset.theme === theme));
+      localStorage.setItem('obscura_focus_theme', theme);
+    }
+
+    themeDots.forEach(dot => {
+      dot.addEventListener('click', () => applyTheme(dot.dataset.theme));
+    });
+
+    applyTheme(localStorage.getItem('obscura_focus_theme') || 'purple');
+
+    // ── Clock + greeting ──
+    function updateClock() {
+      const now = new Date();
+      document.getElementById('focusClock').textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const hour = now.getHours();
+      const timeOfDay = hour < 12 ? 'morning' : hour < 17 ? 'afternoon' : 'evening';
+      const name = session.user && session.user.email ? session.user.email.split('@')[0] : 'there';
+      document.getElementById('focusGreeting').textContent = `Good ${timeOfDay}, ${name}.`;
+    }
+    updateClock();
+    setInterval(updateClock, 30000);
+
+    // ── Motivational quotes (well-known, attributed) ──
+    const QUOTES = [
+      { text: "It always seems impossible until it's done.", author: "Nelson Mandela" },
+      { text: "The way to get started is to quit talking and begin doing.", author: "Walt Disney" },
+      { text: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" },
+      { text: "The expert in anything was once a beginner.", author: "Helen Hayes" },
+      { text: "Don't watch the clock; do what it does. Keep going.", author: "Sam Levenson" },
+      { text: "The future depends on what you do today.", author: "Mahatma Gandhi" },
+      { text: "You are never too old to set another goal.", author: "C.S. Lewis" },
+      { text: "Success is the sum of small efforts repeated.", author: "Robert Collier" }
+    ];
+    let quoteIndex = Math.floor(Math.random() * QUOTES.length);
+    const quoteWrap = document.getElementById('focusQuoteWrap');
+    const quoteTextEl = document.getElementById('focusQuoteText');
+    const quoteAuthorEl = document.getElementById('focusQuoteAuthor');
+    function showQuote() {
+      quoteWrap.style.opacity = 0;
+      setTimeout(() => {
+        quoteTextEl.textContent = `"${QUOTES[quoteIndex].text}"`;
+        quoteAuthorEl.textContent = `— ${QUOTES[quoteIndex].author}`;
+        quoteWrap.style.opacity = 1;
+        quoteIndex = (quoteIndex + 1) % QUOTES.length;
+      }, 400);
+    }
+    showQuote();
+    setInterval(showQuote, 20000);
+
+    // ── Spotify swap ──
+    document.getElementById('spotifySwapBtn').addEventListener('click', () => {
+      const input = document.getElementById('spotifyUrlInput').value.trim();
+      if (!input) return;
+      // Accepts full open.spotify.com links (playlist/album/track) and rewrites to the embed URL.
+      const match = input.match(/open\.spotify\.com\/(playlist|album|track)\/([a-zA-Z0-9]+)/);
+      if (match) {
+        document.getElementById('spotifyFrame').src = `https://open.spotify.com/embed/${match[1]}/${match[2]}?utm_source=generator&theme=0`;
+      } else {
+        alert('That doesn\'t look like a Spotify playlist, album, or track link.');
+      }
+    });
+
+    // ── Pomodoro timer ──
+    const FOCUS_LEN = 25 * 60;
+    const SHORT_BREAK = 5 * 60;
+    const LONG_BREAK = 15 * 60;
+
+    let secondsLeft = FOCUS_LEN;
+    let isRunning = false;
+    let isBreak = false;
+    let sessionCount = 0;
+    let intervalId = null;
+
+    const timerClock = document.getElementById('timerClock');
+    const timerLabel = document.getElementById('timerLabel');
+    const startPauseBtn = document.getElementById('startPauseBtn');
+    const skipBtn = document.getElementById('skipBtn');
+
+    function renderTime() {
+      const m = Math.floor(secondsLeft / 60).toString().padStart(2, '0');
+      const s = (secondsLeft % 60).toString().padStart(2, '0');
+      timerClock.textContent = `${m}:${s}`;
+    }
+
+    function tick() {
+      secondsLeft--;
+      if (secondsLeft < 0) { advanceSession(); return; }
+      renderTime();
+    }
+
+    function advanceSession() {
+      if (!isBreak) {
+        sessionCount++;
+        isBreak = true;
+        secondsLeft = (sessionCount % 4 === 0) ? LONG_BREAK : SHORT_BREAK;
+        timerLabel.textContent = (sessionCount % 4 === 0) ? 'Long Break' : 'Short Break';
+      } else {
+        isBreak = false;
+        secondsLeft = FOCUS_LEN;
+        timerLabel.textContent = 'Focus Session';
+      }
+      renderTime();
+    }
+
+    startPauseBtn.addEventListener('click', () => {
+      isRunning = !isRunning;
+      startPauseBtn.textContent = isRunning ? 'Pause' : 'Start';
+      if (isRunning) { intervalId = setInterval(tick, 1000); } else { clearInterval(intervalId); }
+    });
+
+    skipBtn.addEventListener('click', () => advanceSession());
+
+    renderTime();
+
+    // ── Today's tasks ──
+    async function loadTasks() {
+      const today = new Date().toISOString().split('T')[0];
+      const taskList = document.getElementById('focusTaskList');
+
+      try {
+        const res = await fetch(
+          `${SUPABASE_URL}/rest/v1/study_tasks?user_id=eq.${session.user.id}&task_date=eq.${today}&order=scheduled_time.asc`,
+          { headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${session.access_token}` } }
+        );
+        const tasks = await res.json().catch(() => []);
+
+        if (!Array.isArray(tasks) || tasks.length === 0) {
+          taskList.innerHTML = `<div class="focus-tasks-empty">No tasks planned for today yet.</div>`;
+          return;
+        }
+
+        taskList.innerHTML = tasks.map(t => `
+          <div class="focus-task-row">
+            <div class="focus-task-check ${t.completed ? 'done' : ''}" data-id="${t.id}" data-completed="${t.completed}">
+              ${t.completed ? '<svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>' : ''}
+            </div>
+            <div class="focus-task-title ${t.completed ? 'done' : ''}">${t.title}</div>
+          </div>
+        `).join('');
+
+        document.querySelectorAll('.focus-task-check').forEach(el => {
+          el.addEventListener('click', async () => {
+            const id = el.dataset.id;
+            const newState = el.dataset.completed !== 'true';
+            try {
+              await fetch(`${SUPABASE_URL}/rest/v1/study_tasks?id=eq.${id}`, {
+                method: 'PATCH',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'apikey': SUPABASE_ANON_KEY,
+                  'Authorization': `Bearer ${session.access_token}`,
+                  'Prefer': 'return=minimal'
+                },
+                body: JSON.stringify({ completed: newState })
+              });
+              loadTasks();
+            } catch (err) { console.error('Could not update task', err); }
+          });
+        });
+      } catch (err) {
+        taskList.innerHTML = `<div class="focus-tasks-empty">Couldn't load tasks right now.</div>`;
+      }
+    }
+
+    loadTasks();
+  </script>
+</body>
+</html>
