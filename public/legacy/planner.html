@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Study Planner — Obscura</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="/legacy/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     .app-shell { display: flex; min-height: 100vh; background: #F9F7FF; }
@@ -136,20 +136,20 @@
 
   <div class="app-shell">
     <aside class="app-sidebar">
-      <a href="dashboard.html" class="logo"><img src="assets/logo.png" alt="Obscura logo"></a>
-      <a href="dashboard.html" class="app-nav-item">
+      <a href="/legacy/dashboard.html" class="logo"><img src="/assets/logo.png" alt="Obscura logo"></a>
+      <a href="/legacy/dashboard.html" class="app-nav-item">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 11.5 12 4l8 7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 10v9a1 1 0 0 0 1 1h4v-6h2v6h4a1 1 0 0 0 1-1v-9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         Home
       </a>
-      <a href="chat.html" class="app-nav-item">
+      <a href="/legacy/chat.html" class="app-nav-item">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 5.5C4 4.67 4.67 4 5.5 4h13c.83 0 1.5.67 1.5 1.5v9c0 .83-.67 1.5-1.5 1.5H9l-4 4v-4H5.5C4.67 16 4 15.33 4 14.5v-9Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
         AI Chat
       </a>
-      <a href="planner.html" class="app-nav-item active">
+      <a href="/legacy/planner.html" class="app-nav-item active">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="5" width="16" height="15" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M4 9.5h16" stroke="currentColor" stroke-width="1.8"/><path d="M8 3v3.2M16 3v3.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
         Planner
       </a>
-      <a href="focus-room.html" class="app-nav-item">
+      <a href="/legacy/focus-room.html" class="app-nav-item">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v4l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         Focus Room
       </a>
@@ -189,7 +189,7 @@
 
       <div id="taskList"><div class="task-empty">Loading...</div></div>
 
-      <a href="focus-room.html" class="focus-cta">
+      <a href="/legacy/focus-room.html" class="focus-cta">
         <div class="focus-cta-left">
           <div class="focus-cta-icon">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="white"><circle cx="12" cy="12" r="8" stroke-width="1.8"/><path d="M12 8v4l3 2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -227,13 +227,13 @@
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpzZHNxeW93Y2ppZmJrdGJvbGppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzNzI2MzAsImV4cCI6MjA5NTk0ODYzMH0.k6FeqX_s7y4C662Do6ii9MkRSlkWMFzdF2Knvrwg3b8';
 
     const sessionRaw = localStorage.getItem('obscura_session');
-    if (!sessionRaw) window.location.href = 'index.html';
+    if (!sessionRaw) window.location.href = '/';
     const session = JSON.parse(sessionRaw || '{}');
 
     document.getElementById('logoutBtn').addEventListener('click', (e) => {
       e.preventDefault();
       localStorage.removeItem('obscura_session');
-      window.location.href = 'index.html';
+      window.location.href = '/';
     });
 
     // ── Week day selector ──
