@@ -577,13 +577,15 @@ git commit -m "Add AuthContext with session, profile, and auth-modal state"
 - Create: `src/components/routing/ProtectedRoute.tsx`
 - Create: `src/layouts/MarketingLayout.tsx` (bare `<Outlet/>` for now — Task 9 fills in Nav/Footer/modals)
 - Create: `src/layouts/AppLayout.tsx` (bare shell for now — Task 15 fills in Sidebar)
-- Create stub pages: `src/pages/HomePage.tsx`, `src/pages/JourneyPage.tsx`, `src/pages/OnboardingPage.tsx`, `src/pages/app/DashboardPage.tsx`, `src/pages/app/ChatPage.tsx`, `src/pages/app/PlannerPage.tsx`, `src/pages/app/FocusRoomPage.tsx`
+- Create stub pages: `src/pages/HomePage.tsx`, `src/pages/JourneyPage.tsx`, `src/pages/OnboardingPage.tsx`, `src/pages/app/DashboardPage.tsx`, `src/pages/app/ChatPage.tsx`, `src/pages/app/PlannerPage.tsx`, `src/pages/app/FocusRoomPage.tsx`, `src/pages/app/ProgressPage.tsx`
 - Create: `src/router.tsx`
 - Modify: `src/main.tsx` (mount `RouterProvider`)
 
 **Interfaces:**
 - Consumes: `useAuth()` from Task 5.
-- Produces: the full route tree (`/`, `/journey`, `/onboarding`, `/app/dashboard`, `/app/chat`, `/app/planner`, `/app/focus-room`), navigable end-to-end before any real content exists. Every later page task edits one of these stub files in place rather than creating a new route.
+- Produces: the full route tree (`/`, `/journey`, `/onboarding`, `/app/dashboard`, `/app/chat`, `/app/planner`, `/app/focus-room`, `/app/progress`), navigable end-to-end before any real content exists. Every later page task edits one of these stub files in place rather than creating a new route.
+
+Note: `/app/progress` and `ProgressPage` were added after this task was originally written — a `progress.html` page (stat cards, 7-day activity chart, recently-completed list) was added to the legacy static site alongside the other app pages, with its sidebar nav link enabled (no "Soon" badge) in `chat.html`/`dashboard.html`/`planner.html`. It follows the exact same pattern as `dashboard.html`/`chat.html`/`planner.html`/`focus-room.html`, so it gets the same treatment: moved to `/legacy/progress.html` (handled by Task 20), with a placeholder React route here.
 
 - [ ] **Step 1: Install react-router-dom**
 
@@ -696,6 +698,13 @@ export function FocusRoomPage() {
 }
 ```
 
+`src/pages/app/ProgressPage.tsx`:
+```tsx
+export function ProgressPage() {
+  return <div>Progress (WIP)</div>;
+}
+```
+
 - [ ] **Step 6: Create `src/router.tsx`**
 
 ```tsx
@@ -734,6 +743,7 @@ export const router = createBrowserRouter([
           { path: 'chat', lazy: () => import('./pages/app/ChatPage').then((m) => ({ Component: m.ChatPage })) },
           { path: 'planner', lazy: () => import('./pages/app/PlannerPage').then((m) => ({ Component: m.PlannerPage })) },
           { path: 'focus-room', lazy: () => import('./pages/app/FocusRoomPage').then((m) => ({ Component: m.FocusRoomPage })) },
+          { path: 'progress', lazy: () => import('./pages/app/ProgressPage').then((m) => ({ Component: m.ProgressPage })) },
         ],
       },
     ],
@@ -2567,13 +2577,15 @@ git commit -m "Add journey timeline components and assemble JourneyPage"
 **Files:**
 - Create: `src/components/app-shell/Sidebar.tsx`
 - Modify: `src/layouts/AppLayout.tsx` (render `Sidebar`)
-- Modify: `src/pages/app/DashboardPage.tsx`, `src/pages/app/ChatPage.tsx`, `src/pages/app/PlannerPage.tsx`, `src/pages/app/FocusRoomPage.tsx` (replace WIP text with real placeholder content linking to `/legacy/*.html`)
+- Modify: `src/pages/app/DashboardPage.tsx`, `src/pages/app/ChatPage.tsx`, `src/pages/app/PlannerPage.tsx`, `src/pages/app/FocusRoomPage.tsx`, `src/pages/app/ProgressPage.tsx` (replace WIP text with real placeholder content linking to `/legacy/*.html`)
 - Create: `src/styles/app-shell.css` (sidebar/shell rules consolidated from the original per-page `<style>` blocks)
 - Modify: `src/main.tsx` (import the new stylesheet)
 
 **Interfaces:**
 - Consumes: `useAuth()` (Sidebar's logout button).
-- Produces: `Sidebar`, a real `AppLayout`, and four placeholder pages that look like part of the app rather than bare text.
+- Produces: `Sidebar`, a real `AppLayout`, and five placeholder pages that look like part of the app rather than bare text.
+
+Note: Progress is a real, working nav item (not "Soon") because the legacy `chat.html`/`dashboard.html`/`planner.html` already link to a working `progress.html` — Task 20 migrates that page to `/legacy/progress.html`. Profile stays "Soon" (unchanged from the original design).
 
 - [ ] **Step 1: Create `src/styles/app-shell.css`**
 
@@ -2660,6 +2672,11 @@ const NAV_ITEMS = [
     label: 'Planner',
     path: 'M4 5h16v15H4z M4 9.5h16 M8 3v3.2M16 3v3.2',
   },
+  {
+    to: '/app/progress',
+    label: 'Progress',
+    path: 'M5 19V10M12 19V5M19 19v-7',
+  },
 ];
 
 export function Sidebar() {
@@ -2684,11 +2701,6 @@ export function Sidebar() {
         </NavLink>
       ))}
 
-      <span className="app-nav-item">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 19V10M12 19V5M19 19v-7" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" /></svg>
-        Progress
-        <span className="app-nav-soon">Soon</span>
-      </span>
       <span className="app-nav-item">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="3.5" stroke="currentColor" strokeWidth={1.8} /><path d="M5 20c1.5-4 5-5.5 7-5.5S17.5 16 19 20" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" /></svg>
         Profile
@@ -2729,7 +2741,7 @@ export function AppLayout() {
 }
 ```
 
-- [ ] **Step 5: Replace the four placeholder pages**
+- [ ] **Step 5: Replace the five placeholder pages**
 
 `src/pages/app/DashboardPage.tsx`:
 ```tsx
@@ -2791,13 +2803,28 @@ export function FocusRoomPage() {
 }
 ```
 
+`src/pages/app/ProgressPage.tsx`:
+```tsx
+export function ProgressPage() {
+  return (
+    <div className="app-placeholder-card">
+      <h2>Progress</h2>
+      <p>
+        This page is coming in the next phase. In the meantime, the original working
+        version is still live at <a href="/legacy/progress.html">/legacy/progress.html</a>.
+      </p>
+    </div>
+  );
+}
+```
+
 - [ ] **Step 6: Verify**
 
 ```bash
 npm run build
 ```
 
-Expected: exits 0. Then `npm run dev`, log in (or sign up), complete onboarding once Task 17 exists, and confirm `/app/dashboard`, `/app/chat`, `/app/planner`, `/app/focus-room` all show the sidebar shell with the correct active nav item and a working link to their `/legacy/*.html` counterpart. Confirm "Log Out" clears the session and redirects to `/`.
+Expected: exits 0. Then `npm run dev`, log in (or sign up), complete onboarding once Task 17 exists, and confirm `/app/dashboard`, `/app/chat`, `/app/planner`, `/app/focus-room`, `/app/progress` all show the sidebar shell with the correct active nav item and a working link to their `/legacy/*.html` counterpart. Confirm "Log Out" clears the session and redirects to `/`.
 
 - [ ] **Step 7: Commit**
 
@@ -3184,8 +3211,8 @@ Then `npm run dev` and walk the complete flow end to end:
 1. `/` — full marketing page, all sections render, nav anchors scroll correctly.
 2. `/journey` — timeline renders with working galleries and scroll-fill line.
 3. Sign up a new account via the nav CTA → redirected through `/onboarding` → `/app/dashboard`.
-4. Sidebar navigation across all four `/app/*` placeholder pages, each linking correctly to its `/legacy/*.html` counterpart.
-5. `/legacy/chat.html`, `/legacy/dashboard.html`, `/legacy/planner.html`, `/legacy/focus-room.html` load directly and still fully work (existing Supabase-backed functionality untouched).
+4. Sidebar navigation across all five `/app/*` placeholder pages (dashboard, chat, planner, focus-room, progress), each linking correctly to its `/legacy/*.html` counterpart.
+5. `/legacy/chat.html`, `/legacy/dashboard.html`, `/legacy/planner.html`, `/legacy/focus-room.html`, `/legacy/progress.html` load directly and still fully work (existing Supabase-backed functionality untouched), and their sidebars cross-link to each other correctly including Progress.
 6. Log out from the sidebar redirects to `/`.
 
 - [ ] **Step 4: Commit**
@@ -3193,5 +3220,93 @@ Then `npm run dev` and walk the complete flow end to end:
 ```bash
 git add src/components/common/ErrorBoundary.tsx src/main.tsx
 git commit -m "Add top-level ErrorBoundary and finalize app composition"
+```
+
+---
+
+## Task 20: Migrate progress.html to /legacy and sync Progress nav across all legacy pages
+
+**Context:** This task was added mid-conversion. After Task 3 ran, a `progress.html` page (stat cards, 7-day activity chart, recently-completed list, all driven by `study_tasks` via the same direct-Supabase-fetch pattern as the other app pages) was added at the repo root on `main`, along with edits enabling the Progress nav link (removing the `app-nav-soon` "Soon" badge) in `chat.html`, `dashboard.html`, and `planner.html`. `focus-room.html` was not edited and still shows "Soon" for Progress. These changes were made directly on `main`, not in this worktree, and are now committed there (commit `7d6aba4`, "Add progress.html page and enable Progress nav link") — but they predate Task 3's move of the four app pages into `public/legacy/`, so they reference the OLD root-level paths and need the same link-fixing treatment Task 3 applied, applied fresh to `progress.html` and retrofitted into the four already-migrated `public/legacy/*.html` files in this worktree.
+
+**Files:**
+- Create: `public/legacy/progress.html` (migrated from the root `progress.html` on `main`, commit `7d6aba4`)
+- Modify: `public/legacy/chat.html`, `public/legacy/dashboard.html`, `public/legacy/planner.html` (sync the Progress nav link — same edit `main` already has, applied at the new `/legacy/` paths)
+- Modify: `public/legacy/focus-room.html` (add the Progress nav link for consistency — `main` never got this edit, but the sidebar is otherwise identical across all five pages, so this closes the gap)
+
+**Interfaces:**
+- Consumes: nothing new — same Supabase REST/localStorage-session pattern as the other four legacy pages.
+- Produces: a fifth working legacy page at `/legacy/progress.html`, and a Progress nav link that works identically (points at `/legacy/progress.html`) from all five legacy pages' sidebars.
+
+- [ ] **Step 1: Fetch `progress.html`'s content as committed on `main`**
+
+```bash
+git show main:progress.html > /tmp/progress-source.html
+```
+
+(Or read it directly from the main checkout at `C:\Users\Dell\StudioProjects\obscura-website\progress.html` — same content, commit `7d6aba4`.)
+
+- [ ] **Step 2: Create `public/legacy/progress.html` with the link-fixing treatment applied**
+
+Take the content from Step 1 and apply the same categories of replacement Task 3 applied to the other four pages:
+
+| old | new | replace_all |
+|---|---|---|
+| `href="style.css"` | `href="/legacy/style.css"` | no |
+| `src="assets/logo.png"` | `src="/assets/logo.png"` | no |
+| `href="dashboard.html"` | `href="/legacy/dashboard.html"` | yes |
+| `href="chat.html"` | `href="/legacy/chat.html"` | no |
+| `href="planner.html"` | `href="/legacy/planner.html"` | no |
+| `href="focus-room.html"` | `href="/legacy/focus-room.html"` | no |
+| `href="progress.html" class="app-nav-item active"` | `href="/legacy/progress.html" class="app-nav-item active"` | no |
+| `window.location.href = 'index.html';` | `window.location.href = '/';` | yes |
+
+Before applying, re-check actual occurrence counts against the fetched content the way Task 3's implementer did — the table above states intent (all occurrences of a given path should point to the same destination), not a verified count; use `replace_all: true` for any string that turns out to occur more than once, same as Task 3's implementer correctly did for two cases the original brief undercounted.
+
+- [ ] **Step 3: Sync the Progress nav link into the three already-migrated pages**
+
+In `public/legacy/chat.html`, `public/legacy/dashboard.html`, and `public/legacy/planner.html`, find the sidebar's Progress nav item, currently:
+
+```html
+<a href="#" class="app-nav-item">
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 19V10M12 19V5M19 19v-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+  Progress
+  <span class="app-nav-soon">Soon</span>
+</a>
+```
+
+Replace with:
+
+```html
+<a href="/legacy/progress.html" class="app-nav-item">
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 19V10M12 19V5M19 19v-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+  Progress
+</a>
+```
+
+- [ ] **Step 4: Apply the same edit to `public/legacy/focus-room.html` for consistency**
+
+`focus-room.html`'s sidebar markup is different from the other four (it's a themed full-screen page, not the shared `app-shell`/`app-sidebar` pattern) — check whether it has an equivalent Progress nav reference at all. If it does not have a sidebar/nav section in the same style, no change is needed there; note this in your report rather than inventing a nav element that doesn't fit the page's actual layout. If it does have one matching the pattern above, apply the same replacement.
+
+- [ ] **Step 5: Verify no stale references remain**
+
+```bash
+grep -rn 'href="style.css"\|href="dashboard.html"\|href="chat.html"\|href="planner.html"\|href="focus-room.html"\|href="progress.html"\|href="index.html"\|src="assets/' public/legacy/*.html
+```
+
+Expected: no output.
+
+- [ ] **Step 6: Verify**
+
+```bash
+npm run build
+```
+
+Expected: exits 0 (this task only touches static files under `public/`, so the build should be unaffected — this just confirms nothing else broke).
+
+- [ ] **Step 7: Commit**
+
+```bash
+git add public/legacy/progress.html public/legacy/chat.html public/legacy/dashboard.html public/legacy/planner.html public/legacy/focus-room.html
+git commit -m "Migrate progress.html to /legacy and sync Progress nav across legacy pages"
 ```
 
