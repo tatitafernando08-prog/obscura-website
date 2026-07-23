@@ -45,7 +45,7 @@ export function NewsletterModal() {
     }
   }
 
-  if (!open) return null;
+  if (!open || authModalMode) return null;
 
   return (
     <div className="newsletter-overlay open" onClick={(e) => { if (e.target === e.currentTarget) close(); }}>
