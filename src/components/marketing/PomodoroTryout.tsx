@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useReveal } from '../../hooks/useReveal';
 
 type BlockType = 'focus' | 'break';
@@ -65,11 +65,31 @@ export function PomodoroTryout() {
   const blockIndexRef = useRef(0);
   const intervalRef = useRef<number | null>(null);
 
+  useEffect(() => {
+    return () => {
+      if (intervalRef.current !== null) {
+        window.clearInterval(intervalRef.current);
+      }
+    };
+  }, []);
+
   function clearTimer() {
     if (intervalRef.current !== null) {
       window.clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
+  }
+
+  function resumeTicking() {
+    clearTimer();
+    intervalRef.current = window.setInterval(() => {
+      secondsRef.current -= 1;
+      if (secondsRef.current < 0) {
+        startBlock(blockIndexRef.current + 1);
+        return;
+      }
+      setDisplaySeconds(secondsRef.current);
+    }, 1000);
   }
 
   function startBlock(index: number) {
@@ -114,7 +134,7 @@ export function PomodoroTryout() {
   function handlePause() {
     setIsPaused((prev) => {
       const next = !prev;
-      if (next) clearTimer(); else startBlock(blockIndexRef.current);
+      if (next) clearTimer(); else resumeTicking();
       return next;
     });
   }
