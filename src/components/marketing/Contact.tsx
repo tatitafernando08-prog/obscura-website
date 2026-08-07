@@ -27,11 +27,11 @@ export function Contact() {
           </svg>
           Instagram
         </a>
-        <a href="https://x.com/" target="_blank" rel="noreferrer" className="contact-link">
+        <a href="#" onClick={(e) => e.preventDefault()} aria-disabled="true" title="Coming soon" className="contact-link">
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M4 4L20 20M20 4L4 20" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" />
           </svg>
-          Twitter
+          Twitter (coming soon)
         </a>
       </div>
     </section>
