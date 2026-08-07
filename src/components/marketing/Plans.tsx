@@ -30,8 +30,8 @@ export function Plans() {
 
   return (
     <section className="unlock-section" id="unlock">
-      <div ref={label.ref} className={label.className}>Plans</div>
-      <h2 ref={title.ref} className={title.className}>Unlock more with Obscura</h2>
+      <div ref={label.ref} className={`${label.className} section-label`}>Plans</div>
+      <h2 ref={title.ref} className={`${title.className} section-title`}>Unlock more with Obscura</h2>
       <p ref={sub.ref} className={`${sub.className} section-sub`}>Choose what works for you, start free, upgrade when you're ready.</p>
 
       <div ref={grid.ref} className={`${grid.className} plans-grid`}>

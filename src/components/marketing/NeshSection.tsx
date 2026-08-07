@@ -23,8 +23,8 @@ export function NeshSection() {
     <section className="nesh-section" id="nesh">
       <div className="nesh-inner">
         <div className="nesh-text">
-          <div ref={label.ref} className={label.className}>NESH AI</div>
-          <h2 ref={title.ref} className={title.className}>Your personal AI tutor.<br />Available 24/7.</h2>
+          <div ref={label.ref} className={`${label.className} section-label`}>NESH AI</div>
+          <h2 ref={title.ref} className={`${title.className} section-title`}>Your personal AI tutor.<br />Available 24/7.</h2>
           <p ref={body.ref} className={`${body.className} about-body`}>NESH is trained on real past papers, so every answer is grounded, accurate, and built for your syllabus. Ask in English, Sinhala, or Tamil.</p>
           <div className="nesh-chips-vertical">
             {CHIPS.map((chip) => <NeshChip key={chip} text={chip} />)}

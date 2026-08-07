@@ -21,6 +21,18 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 
 const SIGNUP_REDIRECT_URL = 'https://d2gtuofwzvtzpk.cloudfront.net/verified.html';
 
+function syncLegacySession(newSession: Session | null) {
+  if (newSession) {
+    localStorage.setItem('obscura_session', JSON.stringify({
+      access_token: newSession.access_token,
+      refresh_token: newSession.refresh_token,
+      user: newSession.user,
+    }));
+  } else {
+    localStorage.removeItem('obscura_session');
+  }
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<StudentProfile | null>(null);
@@ -51,11 +63,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
       setSession(data.session);
+      syncLegacySession(data.session);
       loadProfile(data.session);
     });
 
     const { data: listener } = supabase.auth.onAuthStateChange((_event, newSession) => {
       setSession(newSession);
+      syncLegacySession(newSession);
       loadProfile(newSession);
     });
 

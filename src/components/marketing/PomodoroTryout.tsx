@@ -163,9 +163,9 @@ export function PomodoroTryout() {
 
   return (
     <section className="pomodoro-section" id="pomodoro">
-      <div ref={label.ref} className={label.className}>Try It Free</div>
-      <h2 ref={title.ref} className={title.className}>Plan today's study session</h2>
-      <p ref={sub.ref} className={sub.className}>Tell us how many hours you've got, we'll build you a focused Pomodoro schedule instantly.</p>
+      <div ref={label.ref} className={`${label.className} section-label`}>Try It Free</div>
+      <h2 ref={title.ref} className={`${title.className} section-title`}>Plan today's study session</h2>
+      <p ref={sub.ref} className={`${sub.className} section-sub`}>Tell us how many hours you've got, we'll build you a focused Pomodoro schedule instantly.</p>
 
       <div ref={box.ref} className={`${box.className} pomodoro-box`}>
         {!started ? (

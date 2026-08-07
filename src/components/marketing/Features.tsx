@@ -107,8 +107,8 @@ export function Features() {
 
   return (
     <section className="features" id="features">
-      <div ref={label.ref} className={label.className}>Features</div>
-      <h2 ref={title.ref} className={title.className}>Everything you need to ace your exams</h2>
+      <div ref={label.ref} className={`${label.className} section-label`}>Features</div>
+      <h2 ref={title.ref} className={`${title.className} section-title`}>Everything you need to ace your exams</h2>
       <p ref={sub.ref} className={`${sub.className} section-sub`}>6+ powerful tools, one app, built around how students actually study.</p>
       <div className="features-grid">
         {FEATURES.map((feature) => (

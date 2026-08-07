@@ -8,8 +8,8 @@ export function Contact() {
 
   return (
     <section className="contact-section" id="contact">
-      <div ref={label.ref} className={label.className}>Contact</div>
-      <h2 ref={title.ref} className={title.className}>Get in touch.</h2>
+      <div ref={label.ref} className={`${label.className} section-label`}>Contact</div>
+      <h2 ref={title.ref} className={`${title.className} section-title`}>Get in touch.</h2>
       <p ref={sub.ref} className={`${sub.className} section-sub`}>Questions, feedback, or just want to say hi to the fox? We'd love to hear from you.</p>
       <div ref={links.ref} className={`${links.className} contact-links`}>
         <a href="mailto:obscurabytechlume@gmail.com" className="contact-link">

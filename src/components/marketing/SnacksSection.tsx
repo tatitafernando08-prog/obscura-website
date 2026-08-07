@@ -12,7 +12,7 @@ export function SnacksSection() {
     <section className="snacks-section" id="snacks">
       <div className="snacks-inner">
         <div className="snacks-text">
-          <div ref={label.ref} className={label.className}>NESH Needs Fuel</div>
+          <div ref={label.ref} className={`${label.className} section-label`}>NESH Needs Fuel</div>
           <p ref={quote.ref} className={`${quote.className} snacks-quote`}>" Help me stay sharp and snappy! "</p>
           <p ref={body.ref} className={`${body.className} snacks-body`}><strong>This app will always be free to use.</strong> But if you'd like to support our mission, feel free to feed the fox. Any amount helps!</p>
           <div ref={btns.ref} className={`${btns.className} snacks-btns`}>

@@ -11,8 +11,8 @@ export function RobotSection() {
 
   return (
     <section className="robot-section" id="robot">
-      <div ref={label.ref} className={label.className}>IoT Companion</div>
-      <h2 ref={title.ref} className={title.className}>Meet NESH in real life.</h2>
+      <div ref={label.ref} className={`${label.className} section-label`}>IoT Companion</div>
+      <h2 ref={title.ref} className={`${title.className} section-title`}>Meet NESH in real life.</h2>
       <p ref={sub.ref} className={`${sub.className} section-sub`}>A physical AI robot companion, press a button, ask NESH anything, get a voice response. Coming soon.</p>
       <div ref={viewer.ref} className={`${viewer.className} robot-viewer`}>
         <model-viewer
