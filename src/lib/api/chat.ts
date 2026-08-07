@@ -10,8 +10,11 @@ export async function askNesh(request: ChatRequest): Promise<ChatResponse> {
   });
 
   if (!res.ok) {
-    const data = await res.json().catch(() => ({}));
-    throw new Error(data.message ?? "NESH couldn't answer that just now.");
+    const data: unknown = await res.json().catch(() => ({}));
+    const message = typeof data === 'object' && data !== null && 'message' in data && typeof (data as { message: unknown }).message === 'string'
+      ? (data as { message: string }).message
+      : undefined;
+    throw new Error(message ?? "NESH couldn't answer that just now.");
   }
 
   return res.json() as Promise<ChatResponse>;
