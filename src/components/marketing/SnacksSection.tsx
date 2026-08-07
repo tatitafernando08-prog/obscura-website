@@ -16,13 +16,13 @@ export function SnacksSection() {
           <p ref={quote.ref} className={`${quote.className} snacks-quote`}>" Help me stay sharp and snappy! "</p>
           <p ref={body.ref} className={`${body.className} snacks-body`}><strong>This app will always be free to use.</strong> But if you'd like to support our mission, feel free to feed the fox. Any amount helps!</p>
           <div ref={btns.ref} className={`${btns.className} snacks-btns`}>
-            <a href="#" onClick={(e) => e.preventDefault()} aria-disabled="true" title="Coming soon" className="snacks-btn coffee">
+            <a href="https://buymeacoffee.com/obscurabytl" target="_blank" rel="noreferrer" className="snacks-btn coffee">
               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: 16, height: 16 }}>
                 <path d="M5 9h12v5a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4V9Z" stroke="currentColor" strokeWidth={1.6} strokeLinejoin="round" />
                 <path d="M17 10.5h1.5a2.2 2.2 0 0 1 0 4.4H17" stroke="currentColor" strokeWidth={1.6} />
                 <path d="M8.5 6c0-1 .8-1 .8-2M12 6c0-1 .8-1 .8-2" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" />
               </svg>
-              Buy NESH a Coffee (coming soon)
+              Buy NESH a Coffee
             </a>
             <a href="#" onClick={(e) => e.preventDefault()} aria-disabled="true" title="Coming soon" className="snacks-btn paypal">
               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: 16, height: 16 }}>

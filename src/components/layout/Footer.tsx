@@ -18,7 +18,7 @@ export function Footer() {
                 <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" />
               </svg>
             </a>
-            <a href="#" onClick={(e) => e.preventDefault()} aria-disabled="true" title="Coming soon" className="social-icon" aria-label="X (coming soon)">
+            <a href="https://x.com/Obscuraedux" target="_blank" rel="noreferrer" className="social-icon" aria-label="X">
               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M4 4L20 20M20 4L4 20" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" />
               </svg>
@@ -65,11 +65,11 @@ export function Footer() {
             </svg>
             Instagram
           </a>
-          <a href="#" onClick={(e) => e.preventDefault()} aria-disabled="true" title="Coming soon" className="footer-contact-link">
+          <a href="https://x.com/Obscuraedux" target="_blank" rel="noreferrer" className="footer-contact-link">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M4 4L20 20M20 4L4 20" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" />
             </svg>
-            Twitter (coming soon)
+            Twitter
           </a>
         </div>
       </div>
