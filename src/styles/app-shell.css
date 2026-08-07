@@ -1,0 +1,43 @@
+.app-shell { display: flex; min-height: 100vh; background: #F9F7FF; }
+.app-sidebar {
+  width: 240px; flex-shrink: 0; background: #ffffff;
+  border-right: 1px solid rgba(124,92,191,0.1); padding: 24px 16px;
+  display: flex; flex-direction: column;
+}
+.app-sidebar .logo { padding: 0 8px; margin-bottom: 32px; font-size: 18px; }
+.app-sidebar .logo img { width: 36px; height: 36px; }
+.app-nav-item {
+  display: flex; align-items: center; gap: 12px; padding: 12px 14px;
+  border-radius: 12px; color: rgba(45,31,78,0.6); text-decoration: none;
+  font-size: 14px; font-weight: 500; margin-bottom: 4px;
+  transition: background 0.2s, color 0.2s;
+}
+.app-nav-item svg { width: 20px; height: 20px; flex-shrink: 0; }
+.app-nav-item:hover { background: rgba(124,92,191,0.06); }
+.app-nav-item.active { background: rgba(124,92,191,0.1); color: #7C5CBF; font-weight: 600; }
+.app-nav-soon {
+  margin-left: auto; font-size: 10px; font-weight: 700; color: rgba(124,92,191,0.5);
+  background: rgba(124,92,191,0.08); padding: 2px 6px; border-radius: 100px;
+}
+.app-sidebar-footer { margin-top: auto; padding-top: 16px; border-top: 1px solid rgba(124,92,191,0.1); }
+.app-main { flex: 1; padding: 40px 48px; max-width: 1000px; }
+.app-placeholder-card {
+  background: #ffffff; border: 1px solid rgba(124,92,191,0.1); border-radius: 16px;
+  padding: 32px; max-width: 480px;
+}
+.app-placeholder-card h2 { font-family: 'Space Grotesk', sans-serif; color: #2D1F4E; margin-bottom: 8px; }
+.app-placeholder-card p { color: rgba(45,31,78,0.6); font-size: 14px; line-height: 1.6; }
+.app-placeholder-card a { color: #7C5CBF; font-weight: 600; }
+
+@media (max-width: 900px) {
+  .app-shell { flex-direction: column; }
+  .app-sidebar {
+    width: 100%; flex-direction: row; overflow-x: auto; padding: 12px;
+    border-right: none; border-bottom: 1px solid rgba(124,92,191,0.1);
+  }
+  .app-sidebar .logo { display: none; }
+  .app-nav-item { flex-shrink: 0; }
+  .app-nav-soon { display: none; }
+  .app-sidebar-footer { display: none; }
+  .app-main { padding: 24px; }
+}
