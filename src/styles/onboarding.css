@@ -1,0 +1,107 @@
+.onboarding-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  background: linear-gradient(135deg, #FAF8FF 0%, #F0EBFF 100%);
+}
+.onboarding-card {
+  width: 100%;
+  max-width: 480px;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 40px 36px;
+  box-shadow: 0 20px 60px rgba(124,92,191,0.15);
+}
+.onboarding-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: #2D1F4E;
+  margin-bottom: 28px;
+}
+.onboarding-logo img { width: 36px; height: 36px; }
+.onboarding-steps {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+.onboarding-steps span {
+  flex: 1;
+  height: 4px;
+  border-radius: 100px;
+  background: rgba(124,92,191,0.15);
+  transition: background 0.3s;
+}
+.onboarding-steps span.done { background: #7C5CBF; }
+.onboarding-step { display: none; }
+.onboarding-step.active { display: block; }
+.onboarding-step h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #2D1F4E;
+  margin-bottom: 6px;
+}
+.onboarding-step p.sub {
+  font-size: 14px;
+  color: rgba(45,31,78,0.6);
+  margin-bottom: 24px;
+}
+.option-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.option-card {
+  border: 2px solid rgba(124,92,191,0.15);
+  border-radius: 14px;
+  padding: 18px 16px;
+  text-align: center;
+  cursor: pointer;
+  font-weight: 600;
+  color: #2D1F4E;
+  font-size: 14px;
+  transition: border-color 0.2s, background 0.2s;
+}
+.option-card:hover { border-color: rgba(124,92,191,0.4); }
+.option-card.selected {
+  border-color: #7C5CBF;
+  background: rgba(124,92,191,0.08);
+  color: #7C5CBF;
+}
+.onboarding-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.onboarding-back {
+  background: none;
+  border: none;
+  color: rgba(45,31,78,0.5);
+  font-size: 14px;
+  cursor: pointer;
+  visibility: hidden;
+}
+.onboarding-back.visible { visibility: visible; }
+.onboarding-continue {
+  border: none;
+  cursor: pointer;
+  padding: 12px 32px;
+}
+.onboarding-continue:disabled { opacity: 0.5; cursor: not-allowed; }
+.onboarding-error {
+  display: none;
+  font-size: 13px;
+  color: #D14F4F;
+  background: rgba(224,92,92,0.1);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 16px;
+}
+.onboarding-error.visible { display: block; }

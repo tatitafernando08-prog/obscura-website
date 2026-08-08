@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Chat — Obscura</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="/legacy/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     .app-shell { display: flex; height: 100vh; background: #F9F7FF; overflow: hidden; }
@@ -109,26 +109,26 @@
 
   <div class="app-shell">
     <aside class="app-sidebar">
-      <a href="dashboard.html" class="logo">
-        <img src="assets/logo.png" alt="Obscura logo">
+      <a href="/legacy/dashboard.html" class="logo">
+        <img src="/assets/logo.png" alt="Obscura logo">
       </a>
-      <a href="dashboard.html" class="app-nav-item">
+      <a href="/legacy/dashboard.html" class="app-nav-item">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 11.5 12 4l8 7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 10v9a1 1 0 0 0 1 1h4v-6h2v6h4a1 1 0 0 0 1-1v-9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         Home
       </a>
-      <a href="focus-room.html" class="app-nav-item">
+      <a href="/legacy/focus-room.html" class="app-nav-item">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v4l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         Focus Room
       </a>
-      <a href="chat.html" class="app-nav-item active">
+      <a href="/legacy/chat.html" class="app-nav-item active">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 5.5C4 4.67 4.67 4 5.5 4h13c.83 0 1.5.67 1.5 1.5v9c0 .83-.67 1.5-1.5 1.5H9l-4 4v-4H5.5C4.67 16 4 15.33 4 14.5v-9Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
         AI Chat
       </a>
-      <a href="planner.html" class="app-nav-item">
+      <a href="/legacy/planner.html" class="app-nav-item">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="5" width="16" height="15" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M4 9.5h16" stroke="currentColor" stroke-width="1.8"/><path d="M8 3v3.2M16 3v3.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
         Planner
       </a>
-      <a href="progress.html" class="app-nav-item">
+      <a href="/legacy/progress.html" class="app-nav-item">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 19V10M12 19V5M19 19v-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
         Progress
       </a>
@@ -161,7 +161,7 @@
 
       <div class="chat-messages" id="chatMessages">
         <div class="chat-empty-state" id="chatEmptyState">
-          <img src="assets/mascot_wave.png" alt="NESH">
+          <img src="/assets/mascot_wave.png" alt="NESH">
           <h3>Ask NESH anything</h3>
           <p>Pick a subject above, then ask your first question.</p>
         </div>
@@ -183,13 +183,13 @@
     const BACKEND_URL = 'https://obscura-backend-production-d7de.up.railway.app';
 
     const sessionRaw = localStorage.getItem('obscura_session');
-    if (!sessionRaw) window.location.href = 'index.html';
+    if (!sessionRaw) window.location.href = '/';
     const session = JSON.parse(sessionRaw || '{}');
 
     document.getElementById('logoutBtn').addEventListener('click', (e) => {
       e.preventDefault();
       localStorage.removeItem('obscura_session');
-      window.location.href = 'index.html';
+      window.location.href = '/';
     });
 
     const SUBJECTS = {
@@ -221,7 +221,7 @@
         if (Array.isArray(rows) && rows.length > 0) {
           profile = rows[0];
         } else {
-          window.location.href = 'onboarding.html';
+          window.location.href = '/onboarding';
           return;
         }
       } catch (err) {
