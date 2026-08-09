@@ -29,6 +29,25 @@
 .app-placeholder-card p { color: rgba(45,31,78,0.6); font-size: 14px; line-height: 1.6; }
 .app-placeholder-card a { color: #7C5CBF; font-weight: 600; }
 
+.settings-field { margin-bottom: 24px; }
+.settings-field label { display: block; font-size: 13px; font-weight: 600; color: #2D1F4E; margin-bottom: 8px; }
+.settings-field input[type="text"] {
+  width: 100%; max-width: 360px; padding: 12px 14px; border: 2px solid rgba(124,92,191,0.15);
+  border-radius: 12px; font-size: 14px; font-family: inherit; color: #2D1F4E;
+}
+.settings-field input[type="text"]:focus { outline: none; border-color: #7C5CBF; }
+.theme-swatch-row { display: flex; gap: 14px; }
+.theme-swatch {
+  width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
+  border: 3px solid transparent; padding: 0;
+}
+.theme-swatch.selected { border-color: #2D1F4E; }
+.theme-swatch.purple { background: linear-gradient(160deg, #2D1F4E 0%, #4A3470 45%, #7C5CBF 100%); }
+.theme-swatch.pink   { background: linear-gradient(160deg, #4E1F3A 0%, #8A3D63 45%, #D96BA0 100%); }
+.theme-swatch.owl    { background: linear-gradient(160deg, #0B0F2E 0%, #171B3D 45%, #2E3364 100%); }
+.theme-swatch.green  { background: linear-gradient(160deg, #123024 0%, #1F5240 45%, #3F9C77 100%); }
+.settings-saved { font-size: 13px; color: #3F9C77; margin-top: 12px; }
+
 @media (max-width: 900px) {
   .app-shell { flex-direction: column; }
   .app-sidebar {
