@@ -1,0 +1,140 @@
+.focus-room {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  background: linear-gradient(160deg, #2D1F4E 0%, #4A3470 45%, #7C5CBF 100%);
+  overflow: hidden;
+  transition: background 0.6s ease;
+}
+.focus-room.theme-pink { background: linear-gradient(160deg, #4E1F3A 0%, #8A3D63 45%, #D96BA0 100%); }
+.focus-room.theme-owl  { background: linear-gradient(160deg, #0B0F2E 0%, #171B3D 45%, #2E3364 100%); }
+.focus-room.theme-green{ background: linear-gradient(160deg, #123024 0%, #1F5240 45%, #3F9C77 100%); }
+
+.focus-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.35;
+  animation: focus-drift 18s ease-in-out infinite;
+  transition: background 0.6s ease;
+}
+.focus-blob.b1 { width: 420px; height: 420px; background: #A87FE0; top: -100px; left: -80px; animation-duration: 22s; }
+.focus-blob.b2 { width: 340px; height: 340px; background: #7C5CBF; bottom: -80px; right: -60px; animation-duration: 26s; animation-delay: -6s; }
+.focus-blob.b3 { width: 260px; height: 260px; background: #F0EBFF; bottom: 20%; left: 15%; animation-duration: 20s; animation-delay: -3s; opacity: 0.15; }
+
+.theme-pink .focus-blob.b1 { background: #F2A6C8; }
+.theme-pink .focus-blob.b2 { background: #D96BA0; }
+.theme-owl  .focus-blob.b1 { background: #4B5AAF; }
+.theme-owl  .focus-blob.b2 { background: #2E3364; }
+.theme-green .focus-blob.b1 { background: #6FD9A8; }
+.theme-green .focus-blob.b2 { background: #3F9C77; }
+
+@keyframes focus-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(40px, -30px) scale(1.08); }
+  66% { transform: translate(-30px, 20px) scale(0.95); }
+}
+
+.focus-exit {
+  position: absolute; top: 24px; left: 24px; z-index: 5;
+  display: flex; align-items: center; gap: 8px;
+  color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; font-weight: 600;
+  background: rgba(255,255,255,0.1); padding: 10px 18px; border-radius: 100px;
+  backdrop-filter: blur(10px); transition: background 0.2s;
+}
+.focus-exit:hover { background: rgba(255,255,255,0.18); }
+.focus-exit svg { width: 16px; height: 16px; }
+
+.theme-picker {
+  position: absolute; top: 24px; right: 24px; z-index: 5;
+  display: flex; gap: 8px;
+  background: rgba(255,255,255,0.1); padding: 8px; border-radius: 100px;
+  backdrop-filter: blur(10px);
+}
+.theme-dot {
+  width: 26px; height: 26px; border-radius: 50%; cursor: pointer;
+  border: 2px solid transparent; transition: border-color 0.2s;
+}
+.theme-dot.active { border-color: white; }
+.theme-dot.purple { background: #7C5CBF; }
+.theme-dot.pink { background: #D96BA0; }
+.theme-dot.owl { background: #2E3364; }
+.theme-dot.green { background: #3F9C77; }
+
+.focus-body {
+  position: relative; z-index: 2; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px; gap: 40px;
+}
+
+.focus-content { display: flex; flex-direction: column; align-items: center; color: white; }
+.focus-clock { font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 500; opacity: 0.85; margin-bottom: 6px; }
+.focus-greeting { font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700; margin-bottom: 32px; text-align: center; }
+
+.focus-timer-card {
+  background: rgba(255,255,255,0.1); backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.15); border-radius: 28px;
+  padding: 40px 56px; text-align: center; margin-bottom: 24px;
+}
+.focus-timer-label { font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; opacity: 0.7; margin-bottom: 12px; }
+.focus-timer-clock { font-family: 'Space Grotesk', sans-serif; font-size: 72px; font-weight: 700; line-height: 1; margin-bottom: 24px; }
+.focus-timer-controls { display: flex; gap: 12px; justify-content: center; }
+.focus-btn { border: none; border-radius: 100px; padding: 12px 28px; font-size: 14px; font-weight: 600; cursor: pointer; transition: transform 0.15s, background 0.2s; }
+.focus-btn:hover { transform: translateY(-1px); }
+.focus-btn.primary { background: white; color: #2D1F4E; }
+.focus-btn.secondary { background: rgba(255,255,255,0.15); color: white; }
+
+.focus-quote-wrap {
+  max-width: 320px; text-align: center; margin-bottom: 8px; min-height: 80px;
+  transition: opacity 0.4s ease;
+}
+.focus-quote-text {
+  font-size: 19px; font-style: italic; font-weight: 500;
+  color: rgba(255,255,255,0.9); line-height: 1.5; margin-bottom: 8px;
+}
+.focus-quote-author {
+  font-size: 13px; color: rgba(255,255,255,0.6); font-weight: 600;
+}
+
+.focus-side {
+  display: flex; flex-direction: column; gap: 20px; width: 320px; flex-shrink: 0;
+}
+.glass-panel {
+  background: rgba(255,255,255,0.08); backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.12); border-radius: 20px; padding: 20px; color: white;
+}
+.panel-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.7; margin-bottom: 14px; }
+
+.focus-task-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; font-size: 14px; }
+.focus-task-check { width: 18px; height: 18px; border-radius: 6px; border: 2px solid rgba(255,255,255,0.5); flex-shrink: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.focus-task-check.done { background: white; border-color: white; }
+.focus-task-check.done svg { width: 12px; height: 12px; color: #7C5CBF; }
+.focus-task-title { flex: 1; }
+.focus-task-title.done { text-decoration: line-through; opacity: 0.5; }
+.focus-tasks-empty { font-size: 13px; opacity: 0.6; }
+
+.spotify-swap {
+  display: flex; gap: 6px; margin-bottom: 12px;
+}
+.spotify-swap input {
+  flex: 1; padding: 8px 12px; border-radius: 100px; border: none;
+  background: rgba(255,255,255,0.15); color: white; font-size: 12px; outline: none;
+}
+.spotify-swap input::placeholder { color: rgba(255,255,255,0.5); }
+.spotify-swap button {
+  border: none; border-radius: 100px; padding: 8px 14px; font-size: 12px;
+  font-weight: 600; background: white; color: #2D1F4E; cursor: pointer;
+}
+.focus-spotify-error {
+  font-size: 12px; color: #FFD1DC; margin: -6px 0 12px;
+}
+
+@media (max-width: 1000px) {
+  .focus-body { flex-direction: column; overflow-y: auto; padding: 90px 20px 24px; }
+  .focus-side { width: 100%; max-width: 360px; }
+}
+@media (max-width: 600px) {
+  .focus-timer-card { padding: 28px 32px; }
+  .focus-timer-clock { font-size: 52px; }
+  .focus-greeting { font-size: 22px; }
+}

@@ -7,6 +7,7 @@ import { router } from './router';
 import './style.css';
 import './styles/app-shell.css';
 import './styles/onboarding.css';
+import './styles/focus-room.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
