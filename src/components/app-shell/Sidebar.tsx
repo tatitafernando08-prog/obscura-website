@@ -27,6 +27,11 @@ const NAV_ITEMS = [
     label: 'Progress',
     path: 'M5 19V10M12 19V5M19 19v-7',
   },
+  {
+    to: '/app/settings',
+    label: 'Settings',
+    path: 'M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7ZM19.4 12a7.4 7.4 0 0 0-.1-1.2l2-1.6-2-3.4-2.4 1a7.6 7.6 0 0 0-2.1-1.2L14.4 3h-4.8l-.4 2.6a7.6 7.6 0 0 0-2.1 1.2l-2.4-1-2 3.4 2 1.6a7.4 7.4 0 0 0 0 2.4l-2 1.6 2 3.4 2.4-1c.6.5 1.3.9 2.1 1.2l.4 2.6h4.8l.4-2.6c.8-.3 1.5-.7 2.1-1.2l2.4 1 2-3.4-2-1.6c.1-.4.1-.8.1-1.2Z',
+  },
 ];
 
 export function Sidebar() {
@@ -50,12 +55,6 @@ export function Sidebar() {
           {item.label}
         </NavLink>
       ))}
-
-      <span className="app-nav-item">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="3.5" stroke="currentColor" strokeWidth={1.8} /><path d="M5 20c1.5-4 5-5.5 7-5.5S17.5 16 19 20" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" /></svg>
-        Profile
-        <span className="app-nav-soon">Soon</span>
-      </span>
 
       <div className="app-sidebar-footer">
         <button
