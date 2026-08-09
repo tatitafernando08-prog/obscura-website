@@ -25,6 +25,7 @@ export const router = createBrowserRouter([
     path: '/app',
     element: <ProtectedRoute require="profile" />,
     children: [
+      { path: 'focus-room', lazy: () => import('./pages/app/FocusRoomPage').then((m) => ({ Component: m.FocusRoomPage })) },
       {
         lazy: () => import('./layouts/AppLayout').then((m) => ({ Component: m.AppLayout })),
         children: [
@@ -32,7 +33,6 @@ export const router = createBrowserRouter([
           { path: 'dashboard', lazy: () => import('./pages/app/DashboardPage').then((m) => ({ Component: m.DashboardPage })) },
           { path: 'chat', lazy: () => import('./pages/app/ChatPage').then((m) => ({ Component: m.ChatPage })) },
           { path: 'planner', lazy: () => import('./pages/app/PlannerPage').then((m) => ({ Component: m.PlannerPage })) },
-          { path: 'focus-room', lazy: () => import('./pages/app/FocusRoomPage').then((m) => ({ Component: m.FocusRoomPage })) },
           { path: 'progress', lazy: () => import('./pages/app/ProgressPage').then((m) => ({ Component: m.ProgressPage })) },
           { path: 'settings', lazy: () => import('./pages/app/SettingsPage').then((m) => ({ Component: m.SettingsPage })) },
         ],
