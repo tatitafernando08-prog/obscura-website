@@ -2,7 +2,7 @@ import { useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { supabase } from '../lib/supabaseClient';
-import type { StudentProfile } from '../types/profile';
+import type { NewStudentProfile } from '../types/profile';
 
 type ExamType = 'OL' | 'AL';
 type Syllabus = 'local' | 'edexcel' | 'cambridge';
@@ -52,7 +52,7 @@ export function OnboardingPage() {
     setSaving(true);
     setError('');
     try {
-      const payload: StudentProfile = {
+      const payload: NewStudentProfile = {
         id: session.user.id,
         exam_type: answers.exam_type as ExamType,
         syllabus: answers.syllabus as Syllabus,

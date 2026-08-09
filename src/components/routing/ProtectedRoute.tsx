@@ -13,10 +13,10 @@ export function ProtectedRoute({ require }: ProtectedRouteProps) {
   }
 
   if (require === 'profile') {
-    if (profileLoading) {
+    if (profileLoading && !profile) {
       return <div style={{ padding: 48, textAlign: 'center' }}>Loading...</div>;
     }
-    if (!profile) {
+    if (!profileLoading && !profile) {
       return <Navigate to="/onboarding" replace />;
     }
   }

@@ -33,6 +33,14 @@ function syncLegacySession(newSession: Session | null) {
   }
 }
 
+const THEME_STORAGE_KEY = 'obscura_focus_theme';
+
+function syncThemeToLegacyStorage(profile: StudentProfile | null) {
+  if (profile) {
+    localStorage.setItem(THEME_STORAGE_KEY, profile.theme);
+  }
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<StudentProfile | null>(null);
@@ -55,7 +63,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       console.error('Could not load profile', error);
       setProfile(null);
     } else {
-      setProfile(data as StudentProfile | null);
+      const loaded = data as StudentProfile | null;
+      setProfile(loaded);
+      syncThemeToLegacyStorage(loaded);
     }
     setProfileLoading(false);
   }, []);
