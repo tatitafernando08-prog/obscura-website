@@ -1,0 +1,94 @@
+.planner-page { max-width: 720px; }
+
+.planner-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 28px; }
+.planner-title { font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 700; color: #2D1F4E; margin-bottom: 4px; }
+.planner-sub { color: rgba(45,31,78,0.55); font-size: 14px; }
+.add-task-btn {
+  width: 44px; height: 44px; border-radius: 14px; border: none;
+  background: #7C5CBF; color: white; font-size: 22px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 8px 20px rgba(124,92,191,0.3); flex-shrink: 0;
+}
+
+.day-selector {
+  display: flex; justify-content: space-between; gap: 8px;
+  background: #ffffff; border: 1px solid rgba(124,92,191,0.1);
+  border-radius: 18px; padding: 14px 10px; margin-bottom: 28px;
+}
+.day-cell {
+  flex: 1; text-align: center; padding: 10px 4px; border-radius: 12px;
+  cursor: pointer; transition: background 0.2s;
+}
+.day-cell:hover { background: rgba(124,92,191,0.06); }
+.day-cell.selected { background: #7C5CBF; color: white; }
+.day-name { font-size: 11px; opacity: 0.6; margin-bottom: 4px; text-transform: uppercase; }
+.day-num { font-size: 15px; font-weight: 700; }
+
+.planner-section-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.planner-section-title { font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 700; color: #2D1F4E; }
+.task-counter { font-size: 12px; font-weight: 600; color: #7C5CBF; background: rgba(124,92,191,0.1); padding: 4px 12px; border-radius: 100px; }
+
+.task-row {
+  display: flex; align-items: center; gap: 14px;
+  background: #ffffff; border: 1px solid rgba(124,92,191,0.1);
+  border-radius: 14px; padding: 16px 18px; margin-bottom: 10px;
+}
+.task-row.completed { background: rgba(91,184,138,0.08); border-color: rgba(91,184,138,0.2); }
+.task-check {
+  width: 22px; height: 22px; border-radius: 7px; border: 2px solid rgba(124,92,191,0.3);
+  flex-shrink: 0; cursor: pointer; display: flex; align-items: center; justify-content: center;
+}
+.task-check.done { background: #5BB88A; border-color: #5BB88A; }
+.task-check.done svg { width: 13px; height: 13px; color: white; }
+.task-info { flex: 1; min-width: 0; }
+.task-title { font-size: 14px; font-weight: 600; color: #2D1F4E; }
+.task-title.done { text-decoration: line-through; color: rgba(45,31,78,0.4); }
+.task-subtitle { font-size: 12px; color: rgba(45,31,78,0.5); }
+.task-delete {
+  width: 26px; height: 26px; border-radius: 8px; border: none; background: none;
+  color: rgba(45,31,78,0.35); cursor: pointer; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: background 0.2s, color 0.2s;
+}
+.task-delete:hover { background: rgba(224,92,92,0.1); color: #D14F4F; }
+.task-delete svg { width: 15px; height: 15px; }
+
+.task-empty { text-align: center; padding: 32px 20px; color: rgba(45,31,78,0.5); font-size: 14px; }
+
+.focus-cta {
+  display: flex; align-items: center; justify-content: space-between;
+  background: linear-gradient(135deg, #2D1F4E 0%, #4A3470 100%);
+  border-radius: 18px; padding: 22px 26px; margin-top: 28px; color: white; text-decoration: none;
+}
+.focus-cta-left { display: flex; align-items: center; gap: 14px; }
+.focus-cta-icon { width: 44px; height: 44px; background: rgba(255,255,255,0.12); border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+.focus-cta-icon svg { width: 22px; height: 22px; }
+.focus-cta-title { font-weight: 700; font-size: 15px; margin-bottom: 2px; }
+.focus-cta-sub { font-size: 12px; opacity: 0.7; }
+.focus-cta-arrow svg { width: 20px; height: 20px; opacity: 0.7; }
+
+.add-task-overlay {
+  position: fixed; inset: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: center; padding: 24px;
+  background: rgba(45,31,78,0.3); backdrop-filter: blur(4px);
+}
+.add-task-card { width: 100%; max-width: 380px; background: white; border-radius: 20px; padding: 28px; }
+.add-task-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 18px; color: #2D1F4E; margin-bottom: 18px; }
+.add-task-card label { font-size: 12px; font-weight: 600; color: #2D1F4E; display: block; margin-bottom: 6px; }
+.add-task-card input {
+  width: 100%; padding: 11px 14px; margin-bottom: 16px; border-radius: 10px;
+  border: 1px solid rgba(124,92,191,0.2); font-family: 'Inter', sans-serif; font-size: 14px; outline: none;
+}
+.add-task-card input:focus { border-color: #7C5CBF; }
+.add-task-error { font-size: 12px; color: #D14F4F; margin: -8px 0 16px; }
+.add-task-actions { display: flex; gap: 10px; }
+.add-task-actions button {
+  flex: 1; padding: 11px; border-radius: 100px; font-size: 14px; font-weight: 600;
+  border: none; cursor: pointer;
+}
+.add-task-cancel { background: rgba(124,92,191,0.08); color: #7C5CBF; }
+.add-task-save { background: #7C5CBF; color: white; }
+
+@media (max-width: 600px) {
+  .day-name { font-size: 9px; }
+  .day-num { font-size: 13px; }
+}

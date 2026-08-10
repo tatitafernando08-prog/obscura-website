@@ -17,7 +17,7 @@ export function TasksPanel() {
     setLoadError(false);
     const { data, error } = await supabase
       .from('study_tasks')
-      .select('id,title,completed,task_date,scheduled_time')
+      .select('id,title,subtitle,completed,task_date,scheduled_time')
       .eq('user_id', session.user.id)
       .eq('task_date', todayISODate())
       .order('scheduled_time', { ascending: true });

@@ -8,6 +8,7 @@ import './style.css';
 import './styles/app-shell.css';
 import './styles/onboarding.css';
 import './styles/focus-room.css';
+import './styles/planner.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
