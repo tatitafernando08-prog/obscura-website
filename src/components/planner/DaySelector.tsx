@@ -1,3 +1,5 @@
+import { toLocalISODate } from '../../lib/date';
+
 const DAY_NAMES = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
 function getMonday(d: Date): Date {
@@ -8,10 +10,6 @@ function getMonday(d: Date): Date {
   return date;
 }
 
-function toISODate(d: Date): string {
-  return d.toISOString().split('T')[0];
-}
-
 interface DaySelectorProps {
   selectedDate: Date;
   onSelect: (date: Date) => void;
@@ -19,14 +17,14 @@ interface DaySelectorProps {
 
 export function DaySelector({ selectedDate, onSelect }: DaySelectorProps) {
   const monday = getMonday(new Date());
-  const selectedISO = toISODate(selectedDate);
+  const selectedISO = toLocalISODate(selectedDate);
 
   return (
     <div className="day-selector">
       {DAY_NAMES.map((name, i) => {
         const d = new Date(monday);
         d.setDate(monday.getDate() + i);
-        const iso = toISODate(d);
+        const iso = toLocalISODate(d);
         return (
           <div
             key={iso}

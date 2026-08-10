@@ -1,11 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { supabase } from '../../lib/supabaseClient';
+import { toLocalISODate } from '../../lib/date';
 import type { StudyTask } from '../../types/task';
-
-function todayISODate(): string {
-  return new Date().toISOString().split('T')[0];
-}
 
 export function TasksPanel() {
   const { session } = useAuth();
@@ -19,7 +16,7 @@ export function TasksPanel() {
       .from('study_tasks')
       .select('id,title,subtitle,completed,task_date,scheduled_time')
       .eq('user_id', session.user.id)
-      .eq('task_date', todayISODate())
+      .eq('task_date', toLocalISODate(new Date()))
       .order('scheduled_time', { ascending: true });
     if (error) {
       setLoadError(true);

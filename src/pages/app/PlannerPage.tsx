@@ -2,13 +2,10 @@ import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { supabase } from '../../lib/supabaseClient';
+import { toLocalISODate } from '../../lib/date';
 import type { NewStudyTask, StudyTask } from '../../types/task';
 import { DaySelector } from '../../components/planner/DaySelector';
 import { AddTaskModal } from '../../components/planner/AddTaskModal';
-
-function toISODate(d: Date): string {
-  return d.toISOString().split('T')[0];
-}
 
 function startOfDay(d: Date): Date {
   const copy = new Date(d);
@@ -30,7 +27,7 @@ export function PlannerPage() {
       .from('study_tasks')
       .select('id,title,subtitle,completed,task_date,scheduled_time')
       .eq('user_id', session.user.id)
-      .eq('task_date', toISODate(selectedDate))
+      .eq('task_date', toLocalISODate(selectedDate))
       .order('scheduled_time', { ascending: true });
     if (error) {
       setLoadError(true);
@@ -74,7 +71,7 @@ export function PlannerPage() {
       title,
       subtitle,
       scheduled_time: scheduledTime,
-      task_date: toISODate(selectedDate),
+      task_date: toLocalISODate(selectedDate),
     };
     const { error } = await supabase.from('study_tasks').insert(payload);
     if (error) throw new Error('Could not save task, please try again.');
@@ -82,7 +79,7 @@ export function PlannerPage() {
     await loadTasks();
   }
 
-  const isToday = toISODate(selectedDate) === toISODate(startOfDay(new Date()));
+  const isToday = toLocalISODate(selectedDate) === toLocalISODate(startOfDay(new Date()));
   const planTitle = isToday
     ? "Today's Plan"
     : selectedDate.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric' });
