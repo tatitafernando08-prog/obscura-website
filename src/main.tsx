@@ -9,6 +9,7 @@ import './styles/app-shell.css';
 import './styles/onboarding.css';
 import './styles/focus-room.css';
 import './styles/planner.css';
+import './styles/dashboard.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
