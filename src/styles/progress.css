@@ -1,0 +1,36 @@
+/* src/styles/progress.css */
+.progress-page { max-width: 800px; }
+.progress-title { font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 700; color: #2D1F4E; margin-bottom: 4px; }
+.progress-sub { color: rgba(45,31,78,0.55); font-size: 14px; margin-bottom: 28px; }
+
+.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px; }
+.stat-card { background: #ffffff; border: 1px solid rgba(124,92,191,0.1); border-radius: 16px; padding: 22px; }
+.stat-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+.stat-icon svg { width: 18px; height: 18px; }
+.stat-icon.purple { background: rgba(124,92,191,0.12); color: #7C5CBF; }
+.stat-icon.green  { background: rgba(91,184,138,0.12); color: #4A9E71; }
+.stat-icon.orange { background: rgba(245,166,35,0.12); color: #E08F1D; }
+.stat-number { font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700; color: #2D1F4E; margin-bottom: 4px; }
+.stat-label { font-size: 12px; color: rgba(45,31,78,0.55); }
+
+.chart-card { background: #ffffff; border: 1px solid rgba(124,92,191,0.1); border-radius: 16px; padding: 24px; margin-bottom: 32px; }
+.chart-bars { display: flex; align-items: flex-end; justify-content: space-between; height: 140px; gap: 10px; margin-bottom: 12px; }
+.chart-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+.chart-bar { width: 100%; max-width: 32px; background: rgba(124,92,191,0.15); border-radius: 6px 6px 0 0; transition: height 0.4s ease; position: relative; }
+.chart-bar.has-completed { background: #7C5CBF; }
+.chart-bar-count { font-size: 11px; font-weight: 700; color: #7C5CBF; margin-bottom: 4px; }
+.chart-labels { display: flex; justify-content: space-between; gap: 10px; }
+.chart-label { flex: 1; max-width: 32px; text-align: center; font-size: 11px; color: rgba(45,31,78,0.5); }
+
+.activity-list { background: #ffffff; border: 1px solid rgba(124,92,191,0.1); border-radius: 16px; overflow: hidden; }
+.activity-row { display: flex; align-items: center; gap: 14px; padding: 14px 20px; border-bottom: 1px solid rgba(124,92,191,0.08); }
+.activity-row:last-child { border-bottom: none; }
+.activity-check { width: 28px; height: 28px; border-radius: 8px; background: rgba(91,184,138,0.12); color: #5BB88A; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.activity-check svg { width: 15px; height: 15px; }
+.activity-title { font-size: 14px; font-weight: 600; color: #2D1F4E; }
+.activity-date { font-size: 12px; color: rgba(45,31,78,0.5); margin-left: auto; flex-shrink: 0; }
+.activity-empty { padding: 32px 20px; text-align: center; color: rgba(45,31,78,0.5); font-size: 14px; }
+
+@media (max-width: 900px) {
+  .stats-grid { grid-template-columns: 1fr; }
+}

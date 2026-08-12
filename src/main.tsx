@@ -10,6 +10,7 @@ import './styles/onboarding.css';
 import './styles/focus-room.css';
 import './styles/planner.css';
 import './styles/dashboard.css';
+import './styles/progress.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
