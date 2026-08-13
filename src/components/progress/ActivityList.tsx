@@ -1,4 +1,5 @@
 import type { StudyTask } from '../../types/task';
+import { fromLocalISODate } from '../../lib/date';
 
 interface ActivityListProps {
   tasks: StudyTask[] | null;
@@ -22,7 +23,7 @@ export function ActivityList({ tasks, loadError }: ActivityListProps) {
           </div>
           <div className="activity-title">{task.title}</div>
           <div className="activity-date">
-            {new Date(task.task_date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
+            {fromLocalISODate(task.task_date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
           </div>
         </div>
       ))}
