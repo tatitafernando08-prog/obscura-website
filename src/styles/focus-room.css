@@ -84,6 +84,18 @@
 .focus-btn.primary { background: white; color: #2D1F4E; }
 .focus-btn.secondary { background: rgba(255,255,255,0.15); color: white; }
 
+.skip-confirm-overlay {
+  position: fixed; inset: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: center; padding: 24px;
+  background: rgba(45,31,78,0.3); backdrop-filter: blur(4px);
+}
+.skip-confirm-card {
+  width: 100%; max-width: 340px; background: #2D1F4E; border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 20px; padding: 28px; text-align: center;
+}
+.skip-confirm-card p { color: white; font-size: 15px; font-weight: 600; margin-bottom: 20px; }
+.skip-confirm-actions { display: flex; gap: 10px; justify-content: center; }
+
 .focus-quote-wrap {
   max-width: 320px; text-align: center; margin-bottom: 8px; min-height: 80px;
   transition: opacity 0.4s ease;
