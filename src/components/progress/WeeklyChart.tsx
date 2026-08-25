@@ -16,7 +16,11 @@ export function WeeklyChart({ days }: WeeklyChartProps) {
               <div
                 className={`chart-bar${d.count > 0 ? ' has-completed' : ''}`}
                 style={{ height: `${heightPct}%` }}
-              />
+              >
+                <div className="chart-bar-tooltip">
+                  {d.label}: {d.count} {d.count === 1 ? 'task' : 'tasks'} completed
+                </div>
+              </div>
             </div>
           );
         })}

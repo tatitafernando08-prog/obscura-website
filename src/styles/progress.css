@@ -19,6 +19,17 @@
 .chart-bar { width: 100%; max-width: 32px; background: rgba(124,92,191,0.15); border-radius: 6px 6px 0 0; transition: height 0.4s ease; position: relative; }
 .chart-bar.has-completed { background: #7C5CBF; }
 .chart-bar-count { font-size: 11px; font-weight: 700; color: #7C5CBF; margin-bottom: 4px; }
+.chart-bar-tooltip {
+  position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+  background: #2D1F4E; color: white; font-size: 11px; font-weight: 600; white-space: nowrap;
+  padding: 6px 10px; border-radius: 6px; opacity: 0; pointer-events: none;
+  transition: opacity 0.15s ease; z-index: 5;
+}
+.chart-bar-tooltip::after {
+  content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+  border: 4px solid transparent; border-top-color: #2D1F4E;
+}
+.chart-bar:hover .chart-bar-tooltip { opacity: 1; }
 .chart-labels { display: flex; justify-content: space-between; gap: 10px; }
 .chart-label { flex: 1; max-width: 32px; text-align: center; font-size: 11px; color: rgba(45,31,78,0.5); }
 
