@@ -18,6 +18,7 @@ interface DaySelectorProps {
 export function DaySelector({ selectedDate, onSelect }: DaySelectorProps) {
   const monday = getMonday(new Date());
   const selectedISO = toLocalISODate(selectedDate);
+  const todayISO = toLocalISODate(new Date());
 
   return (
     <div className="day-selector">
@@ -25,10 +26,11 @@ export function DaySelector({ selectedDate, onSelect }: DaySelectorProps) {
         const d = new Date(monday);
         d.setDate(monday.getDate() + i);
         const iso = toLocalISODate(d);
+        const isPast = iso < todayISO;
         return (
           <div
             key={iso}
-            className={`day-cell${iso === selectedISO ? ' selected' : ''}`}
+            className={`day-cell${iso === selectedISO ? ' selected' : ''}${isPast ? ' past' : ''}`}
             onClick={() => onSelect(d)}
           >
             <div className="day-name">{name}</div>

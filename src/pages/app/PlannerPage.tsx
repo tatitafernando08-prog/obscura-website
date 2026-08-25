@@ -65,7 +65,7 @@ export function PlannerPage() {
   }
 
   async function handleAddTask(title: string, subtitle: string | null, scheduledTime: string | null) {
-    if (!session) return;
+    if (!session || isPastSelected) return;
     const payload: NewStudyTask = {
       user_id: session.user.id,
       title,
@@ -80,6 +80,7 @@ export function PlannerPage() {
   }
 
   const isToday = toLocalISODate(selectedDate) === toLocalISODate(startOfDay(new Date()));
+  const isPastSelected = toLocalISODate(selectedDate) < toLocalISODate(startOfDay(new Date()));
   const planTitle = isToday
     ? "Today's Plan"
     : selectedDate.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric' });
@@ -92,7 +93,15 @@ export function PlannerPage() {
           <div className="planner-title">Study Planner</div>
           <div className="planner-sub">Plan. Focus. Achieve.</div>
         </div>
-        <button type="button" className="add-task-btn" onClick={() => setShowAddModal(true)}>+</button>
+        <button
+          type="button"
+          className="add-task-btn"
+          disabled={isPastSelected}
+          title={isPastSelected ? "Can't add tasks to a past day" : undefined}
+          onClick={() => setShowAddModal(true)}
+        >
+          +
+        </button>
       </div>
 
       <DaySelector selectedDate={selectedDate} onSelect={setSelectedDate} />
@@ -105,7 +114,9 @@ export function PlannerPage() {
       {loadError && <div className="task-empty">Couldn&apos;t load tasks right now.</div>}
       {!loadError && tasks === null && <div className="task-empty">Loading...</div>}
       {!loadError && tasks !== null && tasks.length === 0 && (
-        <div className="task-empty">No tasks for this day yet — tap + to add one.</div>
+        <div className="task-empty">
+          {isPastSelected ? 'No tasks were planned for this day.' : 'No tasks for this day yet — tap + to add one.'}
+        </div>
       )}
       {!loadError && tasks !== null && tasks.map((task) => (
         <div className={`task-row${task.completed ? ' completed' : ''}`} key={task.id}>

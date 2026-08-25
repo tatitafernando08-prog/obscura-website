@@ -9,6 +9,9 @@
   display: flex; align-items: center; justify-content: center;
   box-shadow: 0 8px 20px rgba(124,92,191,0.3); flex-shrink: 0;
 }
+.add-task-btn:disabled {
+  background: rgba(124,92,191,0.25); box-shadow: none; cursor: not-allowed;
+}
 
 .day-selector {
   display: flex; justify-content: space-between; gap: 8px;
@@ -21,6 +24,7 @@
 }
 .day-cell:hover { background: rgba(124,92,191,0.06); }
 .day-cell.selected { background: #7C5CBF; color: white; }
+.day-cell.past:not(.selected) { opacity: 0.45; }
 .day-name { font-size: 11px; opacity: 0.6; margin-bottom: 4px; text-transform: uppercase; }
 .day-num { font-size: 15px; font-weight: 700; }
 
