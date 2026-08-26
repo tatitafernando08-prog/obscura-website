@@ -23,6 +23,11 @@ const NAV_ITEMS = [
     path: 'M4 5h16v15H4z M4 9.5h16 M8 3v3.2M16 3v3.2',
   },
   {
+    to: '/app/flashcards',
+    label: 'Flashcards',
+    path: 'M4 19.5V6a2 2 0 0 1 2-2h9l5 5v10.5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2ZM14 4v5h5',
+  },
+  {
     to: '/app/progress',
     label: 'Progress',
     path: 'M5 19V10M12 19V5M19 19v-7',
