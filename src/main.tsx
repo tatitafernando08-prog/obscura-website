@@ -11,6 +11,7 @@ import './styles/focus-room.css';
 import './styles/planner.css';
 import './styles/dashboard.css';
 import './styles/progress.css';
+import './styles/flashcards.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
