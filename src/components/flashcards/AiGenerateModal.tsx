@@ -5,7 +5,7 @@ import { supabase } from '../../lib/supabaseClient';
 import { subjectsForProfile } from '../../lib/subjects';
 import type { NewFlashcard } from '../../types/flashcard';
 
-const BACKEND_URL = 'https://obscura-backend-production-d7de.up.railway.app';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 interface StagedCard {
   front: string;
