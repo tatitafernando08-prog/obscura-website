@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { supabase } from '../../lib/supabaseClient';
 import type { Flashcard, FlashcardDeck } from '../../types/flashcard';
+import { AiGenerateModal } from '../../components/flashcards/AiGenerateModal';
 
 export function DeckPage() {
   const { deckId } = useParams<{ deckId: string }>();
@@ -13,6 +14,7 @@ export function DeckPage() {
   const [cards, setCards] = useState<Flashcard[] | null>(null);
   const [loadError, setLoadError] = useState(false);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [showAiModal, setShowAiModal] = useState(false);
   const [front, setFront] = useState('');
   const [back, setBack] = useState('');
 
@@ -78,6 +80,9 @@ export function DeckPage() {
           <button type="button" className="new-deck-btn" onClick={() => setShowAddForm((v) => !v)}>
             + Add card
           </button>
+          <button type="button" className="new-deck-btn" onClick={() => setShowAiModal(true)}>
+            Generate with AI
+          </button>
           <button type="button" className="deck-delete-btn" onClick={deleteDeck}>Delete deck</button>
         </div>
       </div>
@@ -101,6 +106,14 @@ export function DeckPage() {
           <button type="button" className="ai-stage-discard" onClick={() => deleteCard(card.id)}>Delete</button>
         </div>
       ))}
+
+      {showAiModal && (
+        <AiGenerateModal
+          deckId={deckId!}
+          onClose={() => setShowAiModal(false)}
+          onSaved={loadDeck}
+        />
+      )}
     </div>
   );
 }
