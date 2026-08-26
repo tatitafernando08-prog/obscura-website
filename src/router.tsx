@@ -34,6 +34,7 @@ export const router = createBrowserRouter([
           { path: 'chat', lazy: () => import('./pages/app/ChatPage').then((m) => ({ Component: m.ChatPage })) },
           { path: 'planner', lazy: () => import('./pages/app/PlannerPage').then((m) => ({ Component: m.PlannerPage })) },
           { path: 'flashcards', lazy: () => import('./pages/app/FlashcardsPage').then((m) => ({ Component: m.FlashcardsPage })) },
+          { path: 'flashcards/:deckId', lazy: () => import('./pages/app/DeckPage').then((m) => ({ Component: m.DeckPage })) },
           { path: 'progress', lazy: () => import('./pages/app/ProgressPage').then((m) => ({ Component: m.ProgressPage })) },
           { path: 'settings', lazy: () => import('./pages/app/SettingsPage').then((m) => ({ Component: m.SettingsPage })) },
         ],
