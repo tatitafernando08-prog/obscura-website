@@ -31,13 +31,18 @@ export function AiGenerateModal({ deckId, onClose, onSaved }: AiGenerateModalPro
     setStatus('loading');
     setErrorMessage('');
     try {
+      const streamValue = profile.exam_type === 'OL' ? 'OL' : profile.stream;
       const res = await fetch(`${BACKEND_URL}/flashcards/generate`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`,
+        },
         body: JSON.stringify({
           student_id: session.user.id,
           subject,
           level: profile.exam_type,
+          stream: streamValue,
           syllabus: profile.syllabus,
           medium: profile.medium,
           count: 10,

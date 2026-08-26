@@ -17,6 +17,7 @@ export function DeckPage() {
   const [showAiModal, setShowAiModal] = useState(false);
   const [front, setFront] = useState('');
   const [back, setBack] = useState('');
+  const [addCardError, setAddCardError] = useState('');
 
   const loadDeck = useCallback(async () => {
     if (!session || !deckId) return;
@@ -43,13 +44,18 @@ export function DeckPage() {
 
   async function addCard() {
     if (!deckId || !front.trim() || !back.trim()) return;
+    setAddCardError('');
     const { error } = await supabase.from('flashcards').insert({
       deck_id: deckId,
       front: front.trim(),
       back: back.trim(),
       source: 'manual',
     });
-    if (error) return;
+    if (error) {
+      console.error('Could not save card', error);
+      setAddCardError('Could not save card, please try again.');
+      return;
+    }
     setFront('');
     setBack('');
     setShowAddForm(false);
@@ -58,13 +64,18 @@ export function DeckPage() {
 
   async function deleteCard(cardId: string) {
     const { error } = await supabase.from('flashcards').delete().eq('id', cardId);
-    if (error) return;
+    if (error) {
+      console.error('Could not delete card', error);
+      return;
+    }
     await loadDeck();
   }
 
   async function deleteDeck() {
     if (!deckId) return;
-    await supabase.from('flashcard_decks').delete().eq('id', deckId);
+    if (!window.confirm('Delete this deck and all its cards? This cannot be undone.')) return;
+    const { error } = await supabase.from('flashcard_decks').delete().eq('id', deckId);
+    if (error) console.error('Could not delete deck', error);
     navigate('/app/flashcards');
   }
 
@@ -77,7 +88,7 @@ export function DeckPage() {
       <div className="deck-page-top">
         <div className="deck-page-title">{deck.title}</div>
         <div className="deck-page-actions">
-          <button type="button" className="new-deck-btn" onClick={() => setShowAddForm((v) => !v)}>
+          <button type="button" className="new-deck-btn" onClick={() => { setAddCardError(''); setShowAddForm((v) => !v); }}>
             + Add card
           </button>
           <button type="button" className="new-deck-btn" onClick={() => setShowAiModal(true)}>
@@ -92,6 +103,7 @@ export function DeckPage() {
           <input type="text" placeholder="Front" value={front} onChange={(e) => setFront(e.target.value)} />
           <textarea placeholder="Back" value={back} onChange={(e) => setBack(e.target.value)} rows={2} />
           <button type="button" onClick={addCard}>Save card</button>
+          {addCardError && <div className="task-empty">{addCardError}</div>}
         </div>
       )}
 

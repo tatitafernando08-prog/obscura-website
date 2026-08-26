@@ -186,12 +186,17 @@ export interface NewFlashcard {
 
 Not implemented in this repo. Contract for whoever builds it:
 
-**Request:**
+**Request** — must include an `Authorization: Bearer <access_token>` header (the
+student's Supabase session token); the backend should verify the JWT and derive
+`student_id` from it rather than trusting the body value, which is a shared
+endpoint against a scarce daily quota. The body keeps `student_id` for
+convenience/logging only:
 ```json
 {
   "student_id": "uuid",
   "subject": "Chemistry",
   "level": "<from profile.exam_type>",
+  "stream": "<'OL' for O/L students, else profile.stream>",
   "syllabus": "<from profile.syllabus>",
   "medium": "<from profile.medium>",
   "count": 10
@@ -231,8 +236,10 @@ slice being viable at all against a 20/day account ceiling).
 
 **Open item for the implementer:** the exact string values `papers.level` uses
 (e.g. whether O/L is stored as `"OL"` or `"O/L"`) weren't confirmed — match
-whatever `chat.html`'s existing `streamValue` convention actually resolves to
-against real data before wiring the filter.
+against real data before wiring the filter. This is about `level`'s own value
+format only; `stream` is now sent as its own field in the request (computed the
+same way as `chat.html`'s `streamValue`: `'OL'` for O/L students, otherwise
+`profile.stream`), so the two should not be conflated when filtering.
 
 The frontend never shows a per-student "N generations left" counter, since the
 pool is shared across all students, not personal — only an available/unavailable

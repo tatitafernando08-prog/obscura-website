@@ -17,6 +17,7 @@ export function FlashcardsPage() {
   const [dueCount, setDueCount] = useState(0);
   const [newDeckTitle, setNewDeckTitle] = useState('');
   const [showNewDeckForm, setShowNewDeckForm] = useState(false);
+  const [createError, setCreateError] = useState('');
 
   const loadDecks = useCallback(async () => {
     if (!session) return;
@@ -41,7 +42,11 @@ export function FlashcardsPage() {
       .select('id, flashcard_decks!inner(user_id)', { count: 'exact', head: true })
       .eq('flashcard_decks.user_id', session.user.id)
       .lte('due_date', toLocalISODate(new Date()));
-    if (!error) setDueCount(count ?? 0);
+    if (error) {
+      console.error('Could not load due count', error);
+      return;
+    }
+    setDueCount(count ?? 0);
   }, [session]);
 
   useEffect(() => {
@@ -51,10 +56,15 @@ export function FlashcardsPage() {
 
   async function createDeck() {
     if (!session || !newDeckTitle.trim()) return;
+    setCreateError('');
     const { error } = await supabase
       .from('flashcard_decks')
       .insert({ user_id: session.user.id, title: newDeckTitle.trim() });
-    if (error) return;
+    if (error) {
+      console.error('Could not create deck', error);
+      setCreateError('Could not create deck, please try again.');
+      return;
+    }
     setNewDeckTitle('');
     setShowNewDeckForm(false);
     await loadDecks();
@@ -68,7 +78,7 @@ export function FlashcardsPage() {
           <div className="flashcards-sub">Study with spaced repetition</div>
         </div>
         <div className="flashcards-actions">
-          <button type="button" className="new-deck-btn" onClick={() => setShowNewDeckForm((v) => !v)}>
+          <button type="button" className="new-deck-btn" onClick={() => { setCreateError(''); setShowNewDeckForm((v) => !v); }}>
             + New deck
           </button>
           {dueCount > 0 ? (
@@ -89,6 +99,7 @@ export function FlashcardsPage() {
             onKeyDown={(e) => { if (e.key === 'Enter') createDeck(); }}
           />
           <button type="button" onClick={createDeck}>Create deck</button>
+          {createError && <div className="task-empty">{createError}</div>}
         </div>
       )}
 

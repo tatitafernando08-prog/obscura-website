@@ -22,6 +22,8 @@ export function StudySessionPage() {
   const [loadError, setLoadError] = useState(false);
   const [flipped, setFlipped] = useState(false);
   const [counts, setCounts] = useState<GradeCounts>({ again: 0, hard: 0, good: 0, easy: 0 });
+  const [grading, setGrading] = useState(false);
+  const [gradeError, setGradeError] = useState('');
 
   const loadQueue = useCallback(async () => {
     if (!session) return;
@@ -44,22 +46,33 @@ export function StudySessionPage() {
   }, [loadQueue]);
 
   async function grade(quality: ReviewQuality, gradeKey: keyof GradeCounts) {
-    if (!queue || queue.length === 0) return;
+    if (!queue || queue.length === 0 || grading) return;
     const current = queue[0];
     const result = computeNextReview(quality, current);
-    await supabase
-      .from('flashcards')
-      .update({
-        interval: result.interval,
-        repetitions: result.repetitions,
-        ease_factor: result.ease_factor,
-        due_date: result.due_date,
-        last_reviewed_at: new Date().toISOString(),
-      })
-      .eq('id', current.id);
-    setCounts((prev) => ({ ...prev, [gradeKey]: prev[gradeKey] + 1 }));
-    setFlipped(false);
-    setQueue((prev) => (prev ? prev.slice(1) : prev));
+    setGrading(true);
+    setGradeError('');
+    try {
+      const { error } = await supabase
+        .from('flashcards')
+        .update({
+          interval: result.interval,
+          repetitions: result.repetitions,
+          ease_factor: result.ease_factor,
+          due_date: result.due_date,
+          last_reviewed_at: new Date().toISOString(),
+        })
+        .eq('id', current.id);
+      if (error) {
+        console.error('Could not save grade', error);
+        setGradeError("Couldn't save that grade — please try again.");
+        return;
+      }
+      setCounts((prev) => ({ ...prev, [gradeKey]: prev[gradeKey] + 1 }));
+      setFlipped(false);
+      setQueue((prev) => (prev ? prev.slice(1) : prev));
+    } finally {
+      setGrading(false);
+    }
   }
 
   if (loadError) return <div className="task-empty">Couldn&apos;t load your review queue right now.</div>;
@@ -97,10 +110,11 @@ export function StudySessionPage() {
         {flipped ? current.back : current.front}
       </div>
       {!flipped && <div className="flashcards-sub" style={{ marginBottom: 16 }}>Tap the card to reveal the answer</div>}
+      {gradeError && <div className="task-empty">{gradeError}</div>}
       {flipped && (
         <div className="study-grade-buttons">
           {GRADES.map((g) => (
-            <button key={g.key} type="button" className={g.className} onClick={() => grade(g.quality, g.key)}>
+            <button key={g.key} type="button" className={g.className} disabled={grading} onClick={() => grade(g.quality, g.key)}>
               {g.label}
             </button>
           ))}

@@ -26,8 +26,7 @@ export function QuickActions() {
           <div className="quick-action-sub">Plan your day</div>
         </Link>
 
-        <div className="quick-action-card">
-          <span className="quick-action-badge">Soon</span>
+        <Link to="/app/flashcards" className="quick-action-card">
           <div className="quick-action-icon green">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect x={5.5} y={7.5} width={12} height={14} rx={2} transform="rotate(-8 11.5 14.5)" stroke="currentColor" strokeWidth={1.7} />
@@ -35,7 +34,7 @@ export function QuickActions() {
           </div>
           <div className="quick-action-title">Flashcards</div>
           <div className="quick-action-sub">Review cards</div>
-        </div>
+        </Link>
 
         <Link to="/app/focus-room" className="quick-action-card">
           <div className="quick-action-icon red">
