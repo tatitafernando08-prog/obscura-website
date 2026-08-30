@@ -11,7 +11,7 @@ export function Hero() {
 
   return (
     <section className="hero" id="hero">
-      <video className="hero-video" autoPlay muted loop playsInline>
+      <video className="hero-video" autoPlay muted loop playsInline poster="/assets/hero-poster.jpg">
         <source src="/assets/hero-bg.mp4" type="video/mp4" />
       </video>
       <div className="hero-overlay"></div>
