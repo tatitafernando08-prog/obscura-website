@@ -784,6 +784,7 @@ tbody td:first-child {
   font-weight: 600;
   font-size: 14px;
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .robot-overlay-btn {

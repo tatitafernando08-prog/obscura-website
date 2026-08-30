@@ -42,7 +42,7 @@
 
 .ai-generate-overlay {
   position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center; padding: 24px;
-  background: rgba(45,31,78,0.3); backdrop-filter: blur(4px);
+  background: rgba(45,31,78,0.3); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
 }
 .ai-generate-card { width: 100%; max-width: 480px; max-height: 80vh; overflow-y: auto; background: white; border-radius: 20px; padding: 28px; }
 .ai-generate-title { font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700; color: #2D1F4E; margin-bottom: 16px; }

@@ -1,8 +1,16 @@
-import type { MouseEvent } from 'react';
+import { useEffect, useRef, type MouseEvent } from 'react';
 import { useAuth } from '../../context/AuthContext';
 
 export function Hero() {
   const { openSignupModal } = useAuth();
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    // React sets `.muted` as a live property but never writes the `muted`
+    // HTML attribute (facebook/react#10389) — force it explicitly so iOS
+    // Safari's autoplay check never has reason to doubt it.
+    videoRef.current?.setAttribute('muted', '');
+  }, []);
 
   function handleGetStarted(e: MouseEvent) {
     e.preventDefault();
@@ -11,7 +19,7 @@ export function Hero() {
 
   return (
     <section className="hero" id="hero">
-      <video className="hero-video" autoPlay muted loop playsInline poster="/assets/hero-poster.jpg">
+      <video ref={videoRef} className="hero-video" autoPlay muted loop playsInline poster="/assets/hero-poster.jpg">
         <source src="/assets/hero-bg.mp4" type="video/mp4" />
       </video>
       <div className="hero-overlay"></div>
