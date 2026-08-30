@@ -1072,11 +1072,17 @@ footer {
 }
 
 /* ── RESPONSIVE ── */
-@media (max-width: 900px) {
-  .features-grid { grid-template-columns: 1fr; }
+@media (max-width: 1024px) {
+  /* Covers phone landscape widths (e.g. 932px on iPhone Pro Max) that
+     exceed the 900px content breakpoint below — without the collapse,
+     the full nav-links row overflows and clips the last items. */
   nav { padding: 12px 20px; left: 12px; right: 12px; top: 10px; }
   .nav-links { display: none; }
   .hamburger { display: flex; }
+}
+
+@media (max-width: 900px) {
+  .features-grid { grid-template-columns: 1fr; }
   .features { padding: 70px 24px; }
 
   .about-inner { flex-direction: column; gap: 40px; }
