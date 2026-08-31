@@ -17,8 +17,21 @@ export function Nav() {
   const { openSignupModal } = useAuth();
 
   useEffect(() => {
+    let lastY = window.scrollY;
     function onScroll() {
-      navRef.current?.classList.toggle('scrolled', window.scrollY > 50);
+      const nav = navRef.current;
+      if (!nav) return;
+      const y = window.scrollY;
+      nav.classList.toggle('scrolled', y > 50);
+
+      if (y <= 50) {
+        nav.classList.remove('nav-hidden');
+      } else if (y - lastY > 5) {
+        nav.classList.add('nav-hidden');
+      } else if (y - lastY < -5) {
+        nav.classList.remove('nav-hidden');
+      }
+      lastY = y;
     }
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);

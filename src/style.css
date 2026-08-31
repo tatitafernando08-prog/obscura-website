@@ -47,7 +47,7 @@ nav {
     0 8px 32px rgba(124,92,191,0.14),
     0 1px 1px rgba(255,255,255,0.8) inset,
     0 -1px 12px rgba(124,92,191,0.04) inset;
-  transition: background 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
+  transition: background 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease, transform 0.35s ease;
 }
 
 nav.scrolled {
@@ -56,6 +56,10 @@ nav.scrolled {
   box-shadow:
     0 8px 28px rgba(124,92,191,0.18),
     0 1px 1px rgba(255,255,255,0.9) inset;
+}
+
+nav.nav-hidden {
+  transform: translateY(-150%);
 }
 
 .logo {
