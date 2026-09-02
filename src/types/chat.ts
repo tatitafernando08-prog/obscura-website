@@ -5,12 +5,12 @@ export interface ChatHistoryMessage {
 
 export interface ChatRequest {
   question: string;
-  stream: string;
-  subject: string;
-  syllabus: string;
   medium: string;
   student_id: string;
-  chat_history: ChatHistoryMessage[];
+  stream?: string;
+  subject?: string;
+  syllabus?: string;
+  chat_history?: ChatHistoryMessage[];
 }
 
 export interface ChatSource {

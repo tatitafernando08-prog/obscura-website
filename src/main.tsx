@@ -12,6 +12,7 @@ import './styles/planner.css';
 import './styles/dashboard.css';
 import './styles/progress.css';
 import './styles/flashcards.css';
+import './styles/chat.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

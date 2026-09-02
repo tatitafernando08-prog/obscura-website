@@ -3,6 +3,14 @@
 Date: 2026-08-29
 Status: Approved
 
+**Amendment (2026-09-01):** Shipped, then the subject dropdown was removed
+per product feedback — retrieval now runs across all subjects and `subject`
+is omitted from the request entirely (it was always optional server-side,
+per `ChatAskDto` below), letting the question itself drive retrieval instead
+of requiring the student to pick a subject first. `subjectsForProfile` is no
+longer used on this page. All other architecture/data-flow/error-handling
+details below are unchanged and still accurate.
+
 ## Problem
 
 `/app/chat` is still a placeholder pointing students at `/legacy/chat.html`.
