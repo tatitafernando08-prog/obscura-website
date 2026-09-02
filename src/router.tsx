@@ -32,6 +32,8 @@ export const router = createBrowserRouter([
           { index: true, element: <Navigate to="dashboard" replace /> },
           { path: 'dashboard', lazy: () => import('./pages/app/DashboardPage').then((m) => ({ Component: m.DashboardPage })) },
           { path: 'chat', lazy: () => import('./pages/app/ChatPage').then((m) => ({ Component: m.ChatPage })) },
+          { path: 'papers', lazy: () => import('./pages/app/PastPapersPage').then((m) => ({ Component: m.PastPapersPage })) },
+          { path: 'papers/:id', lazy: () => import('./pages/app/PastPaperDetailPage').then((m) => ({ Component: m.PastPaperDetailPage })) },
           { path: 'planner', lazy: () => import('./pages/app/PlannerPage').then((m) => ({ Component: m.PlannerPage })) },
           { path: 'flashcards', lazy: () => import('./pages/app/FlashcardsPage').then((m) => ({ Component: m.FlashcardsPage })) },
           { path: 'flashcards/study', lazy: () => import('./pages/app/StudySessionPage').then((m) => ({ Component: m.StudySessionPage })) },

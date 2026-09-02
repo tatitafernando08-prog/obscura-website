@@ -18,6 +18,11 @@ const NAV_ITEMS = [
     path: 'M4 5.5C4 4.67 4.67 4 5.5 4h13c.83 0 1.5.67 1.5 1.5v9c0 .83-.67 1.5-1.5 1.5H9l-4 4v-4H5.5C4.67 16 4 15.33 4 14.5v-9Z',
   },
   {
+    to: '/app/papers',
+    label: 'Past Papers',
+    path: 'M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2ZM14 2v6h6M8 13h8M8 17h5',
+  },
+  {
     to: '/app/planner',
     label: 'Planner',
     path: 'M4 5h16v15H4z M4 9.5h16 M8 3v3.2M16 3v3.2',
