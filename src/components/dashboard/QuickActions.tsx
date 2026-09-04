@@ -47,8 +47,7 @@ export function QuickActions() {
           <div className="quick-action-sub">Focus timer</div>
         </Link>
 
-        <div className="quick-action-card">
-          <span className="quick-action-badge">Soon</span>
+        <Link to="/app/papers" className="quick-action-card">
           <div className="quick-action-icon orange">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M6.5 3.5h8l3 3v13a1 1 0 0 1-1 1h-10a1 1 0 0 1-1-1v-15a1 1 0 0 1 1-1Z" stroke="currentColor" strokeWidth={1.8} strokeLinejoin="round" />
@@ -56,7 +55,7 @@ export function QuickActions() {
           </div>
           <div className="quick-action-title">Past Papers</div>
           <div className="quick-action-sub">Practice now</div>
-        </div>
+        </Link>
 
         <div className="quick-action-card">
           <span className="quick-action-badge">Soon</span>
