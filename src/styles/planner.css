@@ -73,7 +73,7 @@
 .add-task-overlay {
   position: fixed; inset: 0; z-index: 100;
   display: flex; align-items: center; justify-content: center; padding: 24px;
-  background: rgba(45,31,78,0.3); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  background: rgba(45,31,78,0.3); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
 }
 .add-task-card { width: 100%; max-width: 380px; background: white; border-radius: 20px; padding: 28px; }
 .add-task-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 18px; color: #2D1F4E; margin-bottom: 18px; }
