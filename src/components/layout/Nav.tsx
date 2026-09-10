@@ -41,11 +41,6 @@ export function Nav() {
     setMobileOpen(false);
   }
 
-  function handleDownloadClick(e: MouseEvent) {
-    e.preventDefault();
-    alert('App download coming soon!');
-  }
-
   function handleSignupClick(e: MouseEvent) {
     e.preventDefault();
     openSignupModal();
@@ -63,7 +58,7 @@ export function Nav() {
             <Link to={link.href}>{link.label}</Link>
           </li>
         ))}
-        <li><a href="#" onClick={handleDownloadClick}>Download</a></li>
+        <li><Link to="/download">Download</Link></li>
         <li><a href="#download" className="nav-cta" onClick={handleSignupClick}>Sign Up</a></li>
       </ul>
       <div className={`hamburger${mobileOpen ? ' open' : ''}`} onClick={() => setMobileOpen((o) => !o)}>
@@ -75,7 +70,7 @@ export function Nav() {
         {NAV_LINKS.map((link) => (
           <Link key={link.href} to={link.href} onClick={closeMobile}>{link.label}</Link>
         ))}
-        <a href="#" onClick={(e) => { handleDownloadClick(e); closeMobile(); }}>Download</a>
+        <Link to="/download" onClick={closeMobile}>Download</Link>
         <a href="#download" onClick={(e) => { handleSignupClick(e); closeMobile(); }}>Sign Up</a>
       </div>
     </nav>

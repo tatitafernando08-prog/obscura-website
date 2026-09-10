@@ -2,6 +2,7 @@ import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { MarketingLayout } from './layouts/MarketingLayout';
 import { HomePage } from './pages/HomePage';
 import { JourneyPage } from './pages/JourneyPage';
+import { DownloadPage } from './pages/DownloadPage';
 import { ProtectedRoute } from './components/routing/ProtectedRoute';
 
 export const router = createBrowserRouter([
@@ -10,6 +11,7 @@ export const router = createBrowserRouter([
     children: [
       { path: '/', element: <HomePage /> },
       { path: '/journey', element: <JourneyPage /> },
+      { path: '/download', element: <DownloadPage /> },
     ],
   },
   {
