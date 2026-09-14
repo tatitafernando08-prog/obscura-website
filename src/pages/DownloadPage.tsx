@@ -123,7 +123,7 @@ export function DownloadPage() {
               </button>
             </>
           )}
-          <p className="download-card-note">Android APK &middot; iOS coming later</p>
+          <p className="download-card-note">Android APK &middot; iOS coming soon</p>
         </div>
       </section>
     </>
