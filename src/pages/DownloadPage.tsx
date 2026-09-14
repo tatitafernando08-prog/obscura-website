@@ -77,6 +77,8 @@ function DownloadFeatureCard({ feature }: { feature: DownloadFeature }) {
   );
 }
 
+const APK_DOWNLOAD_URL = import.meta.env.VITE_APK_DOWNLOAD_URL;
+
 export function DownloadPage() {
   const label = useReveal<HTMLDivElement>();
   const title = useReveal<HTMLHeadingElement>();
@@ -104,11 +106,23 @@ export function DownloadPage() {
         <div ref={card.ref} className={`${card.className} download-card`}>
           <img src="/assets/logo.png" alt="Obscura logo" className="download-card-logo" />
           <h2>Obscura for Android</h2>
-          <p className="download-card-sub">We're putting the finishing touches on the app. Sign up and we'll email you the moment it's ready to install.</p>
-          <button type="button" className="download-btn" onClick={() => openSignupModal()}>
-            <span className="download-btn-label">Coming Soon</span>
-            <span className="download-btn-sub">Notify me when it's ready</span>
-          </button>
+          {APK_DOWNLOAD_URL ? (
+            <>
+              <p className="download-card-sub">Grab the latest release and install it on your Android device.</p>
+              <a href={APK_DOWNLOAD_URL} download className="download-btn">
+                <span className="download-btn-label">Download APK</span>
+                <span className="download-btn-sub">For Android devices</span>
+              </a>
+            </>
+          ) : (
+            <>
+              <p className="download-card-sub">We're putting the finishing touches on the app. Sign up and we'll email you the moment it's ready to install.</p>
+              <button type="button" className="download-btn" onClick={() => openSignupModal()}>
+                <span className="download-btn-label">Coming Soon</span>
+                <span className="download-btn-sub">Notify me when it's ready</span>
+              </button>
+            </>
+          )}
           <p className="download-card-note">Android APK &middot; iOS coming later</p>
         </div>
       </section>
