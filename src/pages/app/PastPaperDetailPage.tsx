@@ -2,7 +2,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { fetchPaper, PaperNotFoundError } from '../../lib/api/papers';
+import { fetchPaper, fetchPaperViewUrl, PaperNotFoundError } from '../../lib/api/papers';
 import type { PastPaperDetail } from '../../types/paper';
 
 export function PastPaperDetailPage() {
@@ -11,6 +11,8 @@ export function PastPaperDetailPage() {
   const [paper, setPaper] = useState<PastPaperDetail | null>(null);
   const [notFound, setNotFound] = useState(false);
   const [loadError, setLoadError] = useState('');
+  const [viewLoading, setViewLoading] = useState(false);
+  const [viewError, setViewError] = useState('');
 
   const loadPaper = useCallback(async () => {
     if (!session || !id) return;
@@ -33,6 +35,21 @@ export function PastPaperDetailPage() {
     loadPaper();
   }, [loadPaper]);
 
+  const handleViewPdf = useCallback(async () => {
+    if (!session || !id) return;
+    setViewError('');
+    setViewLoading(true);
+    try {
+      const url = await fetchPaperViewUrl(id, session.access_token);
+      window.open(url, '_blank', 'noopener,noreferrer');
+    } catch (err) {
+      console.error('Could not open paper PDF', err);
+      setViewError(err instanceof Error ? err.message : "Couldn't open this paper.");
+    } finally {
+      setViewLoading(false);
+    }
+  }, [session, id]);
+
   return (
     <div className="papers-page">
       <Link to="/app/papers" className="deck-back-link">&larr; All past papers</Link>
@@ -46,6 +63,10 @@ export function PastPaperDetailPage() {
           <div className="paper-detail-row"><span>Year</span><span>{paper.year ?? 'Unknown'}</span></div>
           <div className="paper-detail-row"><span>Status</span><span>{paper.status}</span></div>
           <div className="paper-detail-row"><span>Chunks indexed</span><span>{paper.chunk_count}</span></div>
+          <button type="button" className="view-pdf-btn" onClick={handleViewPdf} disabled={viewLoading}>
+            {viewLoading ? 'Opening...' : 'View PDF'}
+          </button>
+          {viewError && <div className="task-empty">{viewError}</div>}
         </div>
       )}
     </div>

@@ -31,3 +31,18 @@ export async function fetchPaper(id: string, accessToken: string): Promise<PastP
 
   return res.json() as Promise<PastPaperDetail>;
 }
+
+export async function fetchPaperViewUrl(id: string, accessToken: string): Promise<string> {
+  const res = await fetch(`${BACKEND_URL}/papers/${id}/view-url`, {
+    headers: { 'Authorization': `Bearer ${accessToken}` },
+  });
+
+  if (!res.ok) {
+    if (res.status === 401) throw new Error('Your session expired — please sign in again.');
+    if (res.status === 404) throw new PaperNotFoundError('paper_not_found');
+    throw new Error("Couldn't open this paper.");
+  }
+
+  const data = (await res.json()) as { view_url: string };
+  return data.view_url;
+}
